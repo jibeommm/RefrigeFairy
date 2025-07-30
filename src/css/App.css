@@ -1,0 +1,29 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+.body {
+  display: flex; 
+  width: 100%;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-section {
+  display: flex;
+  
+  flex-direction: column;
+  height: 100%;
+}
+
