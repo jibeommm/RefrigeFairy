@@ -1,0 +1,29 @@
+.barcode-input-container.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 10px;
+  margin: 1vw;
+  width: 40vw;
+}
+
+.barcode-input-container.header input {
+  display: flex;
+  border: none;
+  outline: none;
+  margin: 1vw;
+  font-size: 2vw;
+  font-weight: 500;
+  background: none;
+}
+
+.barcode-input-container.header button {
+  border: none;
+  background-color: white;
+  padding-right: 1vw;
+  border-radius: 20px;
+  color: #6cb66f;
+  font-size: 2vw;
+  font-weight: 700;
+}

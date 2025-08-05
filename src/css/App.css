@@ -1,29 +1,43 @@
-#root {
-  width: 100vw;
-  height: 100vh;
+/* /src/css/App.css */
+
+body {
+  background-color: #cde5c0;
+  display: flex;
+  justify-content: center;
 }
 
 .app-container {
+  width: 80vw;
+  background-color: #cde5c0;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  margin: 10vw;
 }
 
-.body {
-  display: flex; 
-  width: 100%;
-}
-
-.sidebar-section {
-  display: flex;
-  flex-direction: column;
+.app-title {
+  font-size: 5vw;
+  font-weight: 700;
+  color: #2d4d2a;
+  text-align: center;
 }
 
 .content-section {
+  width: 80vw;
   display: flex;
-  
-  flex-direction: column;
-  height: 100%;
+  justify-content: space-between;
+  margin-top: 5vw;
+  color: white;
+}
+
+.content-section > div {
+  width: 32vw;
+  height: 33vw;
+  background-color: #8cc690;
+  padding: 2rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 5vw;
 }
 

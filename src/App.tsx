@@ -1,25 +1,31 @@
 // /src/App.tsx
-import Header from "./components/Header";
+import { Routes, Route } from "react-router-dom";
 import BarcodeInput from "./components/BarcodeInput";
 import "./css/App.css";
+import Header from "./components/Header";
+import RegisterFood from "./pages/RegisterFood";
 
-export default function App() {
+function HomePage() {
   return (
     <div className="app-container">
       <Header />
-      <div className="alert-section">
-        Alert 컴포넌트 자리
+      <div>
+        <div className="app-title">냉장고 요정</div>
+        <div><BarcodeInput variant="app" /></div>
       </div>
-      <div className="body">
-        <div className="sidebar-section">
-          <div><BarcodeInput /></div>
-          <div>Search 컴포넌트</div>
-          <div>Category 컴포넌트</div>
-        </div>
-        <div className="content-section">
-          <div>FoodList 컴포넌트</div>
-        </div>
+      <div className="content-section">
+        <div>나의 냉장고로 이동</div>
+        <div>알림 페이지로 이동</div>
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/register" element={<RegisterFood />} />
+    </Routes>
   );
 }

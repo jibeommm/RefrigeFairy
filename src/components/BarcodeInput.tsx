@@ -1,43 +1,32 @@
+// /src/components/BarcodeInput.tsx
 import { useState } from "react";
-import { useBarcodeQuery } from "../hooks/useBarcodeQuery";
-import Modal from "./Modal";
-import type { Food } from "../types/food";
+import "../css/BarcodeInputApp.css";
+import "../css/BarcodeInputHeader.css";
+import { useNavigate } from "react-router-dom";
 
-export default function BarcodeInput() {
+interface BarcodeInputProps {
+  variant?: "app" | "header";
+}
+
+export default function BarcodeInput({ variant = "app" }: BarcodeInputProps) {
   const [barcode, setBarcode] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const { data, isLoading, isError } = useBarcodeQuery(isOpen ? barcode : "");
-
+  const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (barcode) setIsOpen(true);
+    navigate(`/register?barcode=${barcode}`);
   };
 
-
   return (
-    <div>
+    <div className={`barcode-input-container ${variant}`}>
       <input
         type="text"
+        placeholder="바코드를 입력해줘!"
         value={barcode}
         onChange={(e) => setBarcode(e.target.value)}
-        placeholder="바코드 입력"
       />
-      <button onClick={handleSearch}>조회</button>
-
-  
-      {isOpen && (
-        <>
-          {isLoading && <p>로딩 중...</p>}
-          {isError && <p>에러 발생</p>}
-          {data && (
-            <Modal
-              food={data}
-              isOpen={isOpen}
-              onClose={() => setIsOpen(false)} 
-            />
-          )}
-        </>
-      )}
+      <button type="button" onClick={handleSearch}>
+        검색
+      </button>
     </div>
   );
 }

@@ -1,0 +1,29 @@
+.barcode-input-container.app {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  margin: 1vw;
+  width: 80vw;
+}
+
+.barcode-input-container.app input {
+  display: flex;
+  border: none;
+  outline: none;
+  margin: 3.5vw;
+  font-size: 3.5vw;
+  font-weight: 500;
+  background: none;
+}
+
+.barcode-input-container.app button {
+  border: none;
+  background-color: white;
+  padding-right: 2vw;
+  border-radius: 20px;
+  color: #6cb66f;
+  font-size: 3.5vw;
+  font-weight: 700;
+}
