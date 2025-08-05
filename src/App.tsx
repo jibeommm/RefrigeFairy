@@ -4,6 +4,7 @@ import BarcodeInput from "./components/BarcodeInput";
 import "./css/App.css";
 import Header from "./components/Header";
 import RegisterFood from "./pages/RegisterFood";
+import StoragePage from "./pages/StoragePage";
 
 function HomePage() {
   return (
@@ -23,9 +24,10 @@ function HomePage() {
 
 export default function App() {
   return (
-    <Routes>
+    <Routes>``
       <Route path="/" element={<HomePage />} />
       <Route path="/register" element={<RegisterFood />} />
+      <Route path="/storage" element={<StoragePage />} />
     </Routes>
   );
 }
