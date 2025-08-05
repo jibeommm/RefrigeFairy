@@ -8,10 +8,11 @@
   justify-content: space-between;
 }
 
-.logo-section h1 {
+.logo-link {
   font-size: 2.5vw;
   font-weight: 700;
   color: #2d4d2a;
+  text-decoration: none;
 }
 
 .icon-section {
@@ -19,3 +20,4 @@
   align-items: center;
   gap: 1.5vw;
 }
+

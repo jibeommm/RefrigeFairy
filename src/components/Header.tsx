@@ -1,4 +1,5 @@
 // /src/components/Header.tsx
+import { Link } from "react-router-dom";
 import "../css/Header.css";
 import BarcodeInput from "./BarcodeInput";
 
@@ -6,7 +7,9 @@ export default function Header() {
   return (
     <div className="header-container">
       <div className="logo-section">
-        <h1>냉장고를 부탁해</h1>
+        <Link to="/" className="logo-link">
+          냉장고를 부탁해
+        </Link>
       </div>
       <BarcodeInput variant="header" />
       <div className="icon-section">
