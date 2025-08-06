@@ -6,8 +6,8 @@ import { useFoodStore } from "../stores/foodStore";
 import type { Food } from "../types/food";
 import "../css/RegisterFood.css";
 import Header from "../components/Header";
-
-
+import RegisterButton from "../components/RegisterButton";
+import FoodDetail from "../components/FoodDetail";
 
 export default function RegisterFood() {
   const [searchParams] = useSearchParams();
@@ -17,7 +17,7 @@ export default function RegisterFood() {
   const [foodInfo, setFoodInfo] = useState<Food | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { addFood } = useFoodStore();
+  const { addFood} = useFoodStore();
 
   useEffect(() => {
     if (barcode) {
@@ -52,18 +52,8 @@ export default function RegisterFood() {
 
         {foodInfo && (
           <div className="food-info">
-            <div className="name">{foodInfo.name}</div>
-            <p><strong>제품명(세부):</strong> {foodInfo.productName}</p>
-            <p><strong>제조사:</strong> {foodInfo.manufacturer}</p>
-            <p><strong>업체명:</strong> {foodInfo.cmpnyName}</p>
-            <p><strong>산업분류:</strong> {foodInfo.industry}</p>
-            <p><strong>카테고리:</strong> {foodInfo.bigCategory} / {foodInfo.midCategory} / {foodInfo.smallCategory}</p>
-            <p><strong>보관 방법:</strong> {foodInfo.bigCategory} / {foodInfo.midCategory}</p>
-            <p><strong>유통기한 일수:</strong> {foodInfo.expireDays}</p>
-
-            <button className="register-btn" onClick={handleRegister}>
-              등록
-            </button>
+            <FoodDetail food={foodInfo} />
+            <RegisterButton onClick={handleRegister} label="등록" />
           </div>
         )}
       </div>

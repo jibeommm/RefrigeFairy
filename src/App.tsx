@@ -1,10 +1,10 @@
 // /src/App.tsx
-import { Routes, Route } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import BarcodeInput from "./components/BarcodeInput";
 import "./css/App.css";
 import RegisterFood from "./pages/RegisterFood";
 import StoragePage from "./pages/StoragePage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -27,10 +27,11 @@ function HomePage() {
 
 export default function App() {
   return (
-    <Routes>``
+    <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/register" element={<RegisterFood />} />
+      <Route path="/register" element={<RegisterFood/>} />
       <Route path="/storage" element={<StoragePage />} />
+      <Route path="/view" element={<ProductDetailPage />} />
     </Routes>
   );
 }
