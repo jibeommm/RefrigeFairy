@@ -1,11 +1,10 @@
-// /src/types/food.ts
 export type Food = {
   id: string;
   reportNo: string;
   reportDate: string;
   endDate: string;
   name: string;
-  expireDays: string; 
+  expireDays: string;
   category: string;
   manufacturer: string;
   industry: string;
@@ -21,9 +20,10 @@ export type Food = {
   midCategory: string;
   bigCategory: string;
 
-  quantity: number;
-
-  storageType?: string; 
-  expirePeriod?: string;
-  buyDate?: string;
+  quantity?: number;        
+  originalQuantity?: number;   
+  unit?: string;          
+  buyDate?: string;     
+  storageType?: string;    
+  expirePeriod?: string;     
 };

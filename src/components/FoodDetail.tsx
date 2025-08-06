@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useFoodStore } from "../stores/foodStore";
 import { parseExpire } from "../utils/parseExpire";
 import { calculateEndDate } from "../utils/calculateEndDate";
+import { parseQuantity } from "../utils/parseQuantity";
 import "../css/FoodDetail.css";
 
 interface FoodDetailProps {
@@ -13,10 +14,10 @@ interface FoodDetailProps {
 export default function FoodDetail({ food }: FoodDetailProps) {
   const { updateFood } = useFoodStore();
   const { storage, period } = parseExpire(food.expireDays);
-
   const today = new Date().toISOString().split("T")[0];
+  const { quantity: parsedQty, unit: parsedUnit } = parseQuantity(food.productName);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Partial<Food>>({
     name: food.name,
     productName: food.productName,
     manufacturer: food.manufacturer,
@@ -30,150 +31,93 @@ export default function FoodDetail({ food }: FoodDetailProps) {
     expirePeriod: food.expirePeriod || period,
     buyDate: food.buyDate || today,
     endDate: food.endDate || calculateEndDate(food.buyDate || today, food.expirePeriod || period),
-    quantity: food.quantity,
+    quantity: food.quantity ?? parsedQty,
+    originalQuantity: food.originalQuantity ?? parsedQty,
+    unit: food.unit ?? parsedUnit,
   });
 
   useEffect(() => {
-    const newEndDate = calculateEndDate(formData.buyDate, formData.expirePeriod);
+    const newEndDate = calculateEndDate(formData.buyDate!, formData.expirePeriod!);
     setFormData((prev) => ({ ...prev, endDate: newEndDate }));
-    updateFood(food.id, { ...formData, endDate: newEndDate });
+    updateFood(food.id, { ...formData, endDate: newEndDate } as Food);
   }, [formData.buyDate, formData.expirePeriod]);
 
   const handleBlur = (field: keyof Food, value: string | number) => {
     if (typeof value === "string" && !value.trim()) return;
     setFormData((prev) => ({ ...prev, [field]: value }));
-    updateFood(food.id, { [field]: value });
+    updateFood(food.id, { [field]: value } as Partial<Food>);
   };
+
+  const fields: { label: string; key: keyof Food; type?: string }[] = [
+    { label: "제품명", key: "name" },
+    { label: "제품명(세부)", key: "productName" },
+    { label: "제조사", key: "manufacturer" },
+    { label: "업체명", key: "cmpnyName" },
+    { label: "산업분류", key: "industry" },
+    { label: "대분류", key: "bigCategory" },
+    { label: "중분류", key: "midCategory" },
+    { label: "소분류", key: "smallCategory" },
+    { label: "유통기한 원문", key: "expireDays" },
+    { label: "보관 방법", key: "storageType" },
+    { label: "유통기한 (기간)", key: "expirePeriod" },
+    { label: "구매 날짜", key: "buyDate", type: "date" },
+    { label: "유통기한 날짜", key: "endDate", type: "date" },
+  ];
 
   return (
     <div className="food-detail">
       <div className="food-info-grid">
-        <div className="label">제품명</div>
-        <input
-          type="text"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          onBlur={(e) => handleBlur("name", e.target.value)}
-          className="edit-input"
-        />
+        {fields.map(({ label, key, type }) => (
+          <div className="food-list" key={key}>
+            <div className="label">{label}</div>
+            <input
+              type={type || "text"}
+              value={formData[key] ?? ""}
+              onChange={(e) => setFormData((prev) => ({ ...prev, [key]: e.target.value }))}
+              onBlur={(e) => handleBlur(key, e.target.value)}
+              className="edit-input"
+            />
+          </div>
+        ))}
 
-        <div className="label">제품명(세부)</div>
-        <input
-          type="text"
-          value={formData.productName}
-          onChange={(e) => setFormData({ ...formData, productName: e.target.value })}
-          onBlur={(e) => handleBlur("productName", e.target.value)}
-          className="edit-input"
-        />
+        <div className="food-list">
+            <div className="label">현재 수량/처음 수량(단위)</div>
+            <div className="quantity-group">
+                <input 
+                    type="number"
+                    min={0}
+                    value={formData.quantity ?? 0}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, quantity: Number(e.target.value) }))}
+                    onBlur={(e) => handleBlur("quantity", Number(e.target.value))}
+                    className="edit-input quantity-input"
+                    placeholder="현재 수량"
+                />
+                <span>/</span>
+                <input
+                    type="number"
+                    min={0}
+                    value={formData.originalQuantity ?? 0}
+                    onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, originalQuantity: Number(e.target.value) }))
+                    }
+                    onBlur={(e) => handleBlur("originalQuantity", Number(e.target.value))}
+                    className="edit-input quantity-input"
+                    placeholder="처음 수량"
+                />
+                <span>(단위:</span>
+                <input
+                    type="text"
+                    value={formData.unit ?? ""}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, unit: e.target.value }))}
+                    onBlur={(e) => handleBlur("unit", e.target.value)}
+                    className="edit-input unit-input"
+                    placeholder="예: 개, g, L"
+                />
+                <span>)</span>
+            </div>
 
-        <div className="label">제조사</div>
-        <input
-          type="text"
-          value={formData.manufacturer}
-          onChange={(e) => setFormData({ ...formData, manufacturer: e.target.value })}
-          onBlur={(e) => handleBlur("manufacturer", e.target.value)}
-          className="edit-input"
-        />
 
-        <div className="label">업체명</div>
-        <input
-          type="text"
-          value={formData.cmpnyName}
-          onChange={(e) => setFormData({ ...formData, cmpnyName: e.target.value })}
-          onBlur={(e) => handleBlur("cmpnyName", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">산업분류</div>
-        <input
-          type="text"
-          value={formData.industry}
-          onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-          onBlur={(e) => handleBlur("industry", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">대분류</div>
-        <input
-          type="text"
-          value={formData.bigCategory}
-          onChange={(e) => setFormData({ ...formData, bigCategory: e.target.value })}
-          onBlur={(e) => handleBlur("bigCategory", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">중분류</div>
-        <input
-          type="text"
-          value={formData.midCategory}
-          onChange={(e) => setFormData({ ...formData, midCategory: e.target.value })}
-          onBlur={(e) => handleBlur("midCategory", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">소분류</div>
-        <input
-          type="text"
-          value={formData.smallCategory}
-          onChange={(e) => setFormData({ ...formData, smallCategory: e.target.value })}
-          onBlur={(e) => handleBlur("smallCategory", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">유통기한 원문</div>
-        <input
-          type="text"
-          value={formData.expireDays}
-          onChange={(e) => setFormData({ ...formData, expireDays: e.target.value })}
-          onBlur={(e) => handleBlur("expireDays", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">보관 방법</div>
-        <input
-          type="text"
-          value={formData.storageType}
-          onChange={(e) => setFormData({ ...formData, storageType: e.target.value })}
-          onBlur={(e) => handleBlur("storageType", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">유통기한 (기간)</div>
-        <input
-          type="text"
-          value={formData.expirePeriod}
-          onChange={(e) => setFormData({ ...formData, expirePeriod: e.target.value })}
-          onBlur={(e) => handleBlur("expirePeriod", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">구매 날짜</div>
-        <input
-          type="date"
-          value={formData.buyDate}
-          onChange={(e) => setFormData({ ...formData, buyDate: e.target.value })}
-          onBlur={(e) => handleBlur("buyDate", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">유통기한 날짜</div>
-        <input
-          type="date"
-          value={formData.endDate}
-          onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-          onBlur={(e) => handleBlur("endDate", e.target.value)}
-          className="edit-input"
-        />
-
-        <div className="label">수량</div>
-        <input
-          type="number"
-          min={0}
-          value={formData.quantity}
-          onChange={(e) => setFormData({ ...formData, quantity: Number(e.target.value) })}
-          onBlur={(e) => handleBlur("quantity", Number(e.target.value))}
-          className="edit-input"
-        />
+        </div>
       </div>
     </div>
   );

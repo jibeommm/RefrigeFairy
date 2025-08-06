@@ -1,20 +1,36 @@
 /* /src/css/FoodDetail.css */
+.food-detail div{
+    font-size: 2.5vw;
+    color: white;
+}
+
 .food-detail input {
     border: none;
     background: none;
     outline: none;
     color: #fff;
-    font-size: 2vw;
+    font-size: 2.5vw;
     font-weight: 500;
 }
 
-.food-info-grid {
-    display: grid;
-    grid-template-columns: 20vw 1fr;
+.food-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     color: #fff;
-    font-size: 2vw;
-    font-weight: 500;
-    row-gap: 0.6rem;
-    column-gap: 1rem;
 }
 
+.quantity-group {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+
+.quantity-group .edit-input {
+    width: 5vw;
+    text-align: center;
+}
+
+.unit-input {
+    width: 2vw;
+}

@@ -7,24 +7,21 @@ body {
 }
 
 .app-container {
-  width: 80vw;
-  background-color: #cde5c0;
+  width: 60vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   margin: 5vw;
 }
 
 .app-title {
-  font-size: 5vw;
-  font-weight: 700;
-  color: #2d4d2a;
+  font-size: 7vw;
+  font-weight: 1000;
+  color: #6d9660;
   text-align: center;
 }
 
 .content-section {
-  width: 80vw;
   display: flex;
   justify-content: space-between;
   margin-top: 5vw;
@@ -32,12 +29,12 @@ body {
 }
 
 .content-section div {
-  width: 32vw;
-  height: 33vw;
-  background-color: #8cc690;
-  padding: 2rem;
+  width: 25vw;
+  height: 25vw;
+  background-color: #6d9660;
   border-radius: 20px;
+  font-size: 4vw;
   font-weight: 700;
-  font-size: 5vw;
+  padding: 2vw;
 }
 

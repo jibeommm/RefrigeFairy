@@ -1,15 +1,15 @@
 // /src/components/Header.tsx
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../css/Header.css";
 import BarcodeInput from "./BarcodeInput";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <div className="header-container">
-      <div className="logo-section">
-        <Link to="/" className="logo-link">
-          냉장고를 부탁해
-        </Link>
+      <div className="logo-section" onClick={() => navigate("/")}>
+        냉장고를 부탁해
       </div>
       <BarcodeInput variant="header" />
       <div className="icon-section">

@@ -1,23 +1,27 @@
-/* /src/css/RegisterFood.css */
+/* /src/pages/RegisterFood/RegisterFood.css */
 
 .register-container {
   max-width: 80vw;
   margin: 2rem auto;
   padding: 2rem;
-  background: #6c8b5e;
+  background: #6d9660;
   border-radius: 20px;
+}
+
+.register-container div {
+  color: white;
+  font-size: 5vw;
+  font-weight: 500;
 }
 
 .name {
   font-size: 5vw;
   font-weight: 700;
-  color: #333;
 }
 
 .food-info p{
   margin-top: 2rem;
   font-size: 2vw;
-  color: #000;
   font-weight: 500;
 }
 

@@ -1,26 +1,26 @@
 // /src/pages/RegisterFood.tsx
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { fetchBarcode } from "../api/fetchBarcode";
-import { useFoodStore } from "../stores/foodStore";
-import type { Food } from "../types/food";
-import "../css/RegisterFood.css";
-import Header from "../components/Header";
-import RegisterButton from "../components/RegisterButton";
-import FoodDetail from "../components/FoodDetail";
+import { fetchBarcode } from "../../api/fetchBarcode";
+import { useFoodStore } from "../../stores/foodStore";
+import type { Food } from "../../types/food";
+import "./RegisterFood.css";
+import Header from "../../components/Header";
+import FoodDetail from "../../components/FoodDetail";
 
 export default function RegisterFood() {
   const [searchParams] = useSearchParams();
   const barcode = searchParams.get("barcode") || "";
   const navigate = useNavigate();
 
+  const { addFood, foods } = useFoodStore(); 
   const [foodInfo, setFoodInfo] = useState<Food | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { addFood} = useFoodStore();
 
   useEffect(() => {
     if (barcode) {
+      setFoodInfo(null);
       (async () => {
         try {
           setLoading(true);
@@ -39,7 +39,8 @@ export default function RegisterFood() {
 
   const handleRegister = () => {
     if (!foodInfo) return;
-    addFood(foodInfo);
+    const latestFood = foods.find((f) => f.id === foodInfo.id) || foodInfo;
+    addFood(latestFood);
     navigate("/storage");
   };
 
@@ -47,13 +48,13 @@ export default function RegisterFood() {
     <>
       <Header />
       <div className="register-container">
-        {loading && <p>조회 중...</p>}
-        {error && <p className="error">{error}</p>}
+        {loading && <div>조회 중...</div>}
+        {error && <div className="error">{error}</div>}
 
         {foodInfo && (
           <div className="food-info">
             <FoodDetail food={foodInfo} />
-            <RegisterButton onClick={handleRegister} label="등록" />
+            <button onClick={handleRegister}>등록</button>
           </div>
         )}
       </div>

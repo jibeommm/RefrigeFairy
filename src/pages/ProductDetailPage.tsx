@@ -2,9 +2,7 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useFoodStore } from "../stores/foodStore";
 import Header from "../components/Header";
-import RegisterButton from "../components/RegisterButton";
-import BackButton from "../components/BackButton";
-import "../css/RegisterFood.css";
+import "./RegisterFood/RegisterFood.css";
 import FoodDetail from "../components/FoodDetail";
 
 export default function ProductDetailPage() {
@@ -30,12 +28,12 @@ export default function ProductDetailPage() {
       <Header />
       <div className="register-container">
         {!foodInfo ? (
-          <p className="error">해당 상품을 찾을 수 없습니다.</p>
+          <div className="error">해당 상품을 찾을 수 없습니다.</div>
         ) : (
           <div className="food-info">
             <FoodDetail food={foodInfo} />
-            <BackButton onClick={handleBack} label="뒤로가기" />
-            <RegisterButton onClick={handleDelete} label="삭제" />
+            <button onClick={handleBack}>뒤로가기</button>
+            <button onClick={handleDelete}>삭제하기</button>
           </div>
         )}
       </div>

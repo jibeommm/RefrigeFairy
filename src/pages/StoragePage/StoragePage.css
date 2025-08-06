@@ -1,0 +1,61 @@
+.storage-container {
+  width: 80vw;
+  background: #6d9660;
+  border-radius: 20px;
+  color: white;
+  margin-bottom: 5vw;
+}
+
+.food-list {
+  display: flex;
+  flex-direction: column;
+  padding: 2vw;
+}
+
+.food-card {
+  padding: 1vw;
+  display: flex;
+  justify-content: space-between
+}
+
+.name {
+  font-size: 3vw;
+  font-weight: 700;
+  color: white;
+}
+
+.manufacturer {
+  font-size: 2vw;
+  font-weight: 500;
+  color: #f0f0f0;
+}
+
+.food-actions {
+  display: flex;
+  gap: 2vw;
+  font-size: 2vw;
+  font-weight: 500;
+}
+
+.filter-buttons {
+  display: flex;
+  margin: 1vw;
+  gap: 1vw;
+}
+
+.filter-buttons button {
+  width: 10vw;
+  padding: 1vw;
+  border: #6d9660 1px solid;
+  background: #cde5c0;
+  color: #6d9660;
+  border-radius: 30px;
+  font-size: 2vw;
+  font-weight: 700;
+}
+
+.filter-buttons button.active {
+  background: #6d9660;
+  color: white;
+  font-weight: 700;
+}

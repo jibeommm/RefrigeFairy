@@ -6,12 +6,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 5vw;
+  margin-bottom: 2.5vw;
 }
 
-.logo-link {
-  font-size: 2.5vw;
+.logo-section {
+  font-size: 3vw;
   font-weight: 700;
-  color: #2d4d2a;
+  color: #6d9660;
   text-decoration: none;
 }
 
@@ -19,5 +21,8 @@
   display: flex;
   align-items: center;
   gap: 1.5vw;
+  font-size: 2vw;
+  font-weight: 500;
+  color: #6d9660;
 }
 

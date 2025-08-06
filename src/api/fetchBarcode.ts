@@ -15,6 +15,7 @@ export async function fetchBarcode(barcode: string): Promise<Food> {
 
   const urlI2570 = `http://openapi.foodsafetykorea.go.kr/api/${API_KEY}/I2570/json/1/5/BRCD_NO=${barcode}`;
   const res2 = await fetch(urlI2570);
+  if (!res2.ok) throw new Error("C005 API 호출 실패");
   const data2 = await res2.json().catch(() => null);
   const item2 = data2?.I2570?.row?.[0];
 
@@ -40,7 +41,5 @@ export async function fetchBarcode(barcode: string): Promise<Food> {
     smallCategory: item2?.PRDLST_NM || "정보 없음",
     midCategory: item2?.HRNK_PRDLST_NM || "정보 없음",
     bigCategory: item2?.HTRK_PRDLST_NM || "정보 없음",
-
-    quantity: 1,
   };
 }
