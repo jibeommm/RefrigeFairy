@@ -14,6 +14,7 @@ interface FoodDetailProps {
 export default function FoodDetail({ food }: FoodDetailProps) {
   const { updateFood } = useFoodStore();
   const { storage, period } = parseExpire(food.expireDays);
+
   const today = new Date().toISOString().split("T")[0];
   const { quantity: parsedQty, unit: parsedUnit } = parseQuantity(food.productName);
 
@@ -37,9 +38,11 @@ export default function FoodDetail({ food }: FoodDetailProps) {
   });
 
   useEffect(() => {
-    const newEndDate = calculateEndDate(formData.buyDate!, formData.expirePeriod!);
-    setFormData((prev) => ({ ...prev, endDate: newEndDate }));
-    updateFood(food.id, { ...formData, endDate: newEndDate } as Food);
+    if (!food.endDate) {
+      const newEndDate = calculateEndDate(formData.buyDate!, formData.expirePeriod!);
+      setFormData((prev) => ({ ...prev, endDate: newEndDate }));
+      updateFood(food.id, { ...formData, endDate: newEndDate } as Food);
+    }
   }, [formData.buyDate, formData.expirePeriod]);
 
   const handleBlur = (field: keyof Food, value: string | number) => {
@@ -80,43 +83,39 @@ export default function FoodDetail({ food }: FoodDetailProps) {
           </div>
         ))}
 
-        <div className="food-list">
-            <div className="label">현재 수량/처음 수량(단위)</div>
-            <div className="quantity-group">
-                <input 
-                    type="number"
-                    min={0}
-                    value={formData.quantity ?? 0}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, quantity: Number(e.target.value) }))}
-                    onBlur={(e) => handleBlur("quantity", Number(e.target.value))}
-                    className="edit-input quantity-input"
-                    placeholder="현재 수량"
-                />
-                <span>/</span>
-                <input
-                    type="number"
-                    min={0}
-                    value={formData.originalQuantity ?? 0}
-                    onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, originalQuantity: Number(e.target.value) }))
-                    }
-                    onBlur={(e) => handleBlur("originalQuantity", Number(e.target.value))}
-                    className="edit-input quantity-input"
-                    placeholder="처음 수량"
-                />
-                <span>(단위:</span>
-                <input
-                    type="text"
-                    value={formData.unit ?? ""}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, unit: e.target.value }))}
-                    onBlur={(e) => handleBlur("unit", e.target.value)}
-                    className="edit-input unit-input"
-                    placeholder="예: 개, g, L"
-                />
-                <span>)</span>
-            </div>
-
-
+        <div className="quantity-group">
+          <div className="label">현재 수량 / 처음 수량 (단위)</div>
+          <input
+            type="number"
+            min={0}
+            value={formData.quantity ?? 0}
+            onChange={(e) => setFormData((prev) => ({ ...prev, quantity: Number(e.target.value) }))}
+            onBlur={(e) => handleBlur("quantity", Number(e.target.value))}
+            className="edit-input quantity-input"
+            placeholder="현재 수량"
+          />
+          <span>/</span>
+          <input
+            type="number"
+            min={0}
+            value={formData.originalQuantity ?? 0}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, originalQuantity: Number(e.target.value) }))
+            }
+            onBlur={(e) => handleBlur("originalQuantity", Number(e.target.value))}
+            className="edit-input quantity-input"
+            placeholder="처음 수량"
+          />
+          <span>(단위:</span>
+          <input
+            type="text"
+            value={formData.unit ?? ""}
+            onChange={(e) => setFormData((prev) => ({ ...prev, unit: e.target.value }))}
+            onBlur={(e) => handleBlur("unit", e.target.value)}
+            className="edit-input unit-input"
+            placeholder="예: 개, g, L"
+          />
+          <span>)</span>
         </div>
       </div>
     </div>
