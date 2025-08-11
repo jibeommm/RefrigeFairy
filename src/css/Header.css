@@ -1,19 +1,17 @@
 /* /src/css/Header.css */
-
-
 .header-container {
-  width: 80vw;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 5vw;
+  margin-top: 1vw;
   margin-bottom: 2.5vw;
 }
 
 .logo-section {
-  font-size: 3vw;
-  font-weight: 700;
-  color: #6d9660;
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--deep);
   text-decoration: none;
 }
 
@@ -21,8 +19,8 @@
   display: flex;
   align-items: center;
   gap: 1.5vw;
-  font-size: 2vw;
-  font-weight: 500;
-  color: #6d9660;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--deep);
 }
 
