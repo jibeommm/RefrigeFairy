@@ -1,80 +1,90 @@
-import { useFoodStore } from "../../stores/foodStore";
-import Header from "../../components/Header";
-import { useNavigate } from "react-router-dom";
+// src/pages/StoragePage/StoragePage.tsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
+import { useFoodStore } from "../../stores/foodStore";
 import "./StoragePage.css";
-import { calculateDDay } from "../../utils/calculateDDay";
-import { useDebouncedValue } from "../../hooks/useDebouncedValue";
+import ItemCard from "./components/ItemCard";
+import type { FilterTab } from "./helpers";
+import { useFilteredFoods } from "./hooks/useFilteredFoods";
 
 export default function StoragePage() {
-  const { foods } = useFoodStore();
+  const { foods, updateFood } = useFoodStore();
   const navigate = useNavigate();
-  const [filter, setFilter] = useState<"모두" | "냉장" | "냉동" | "실온">("모두");
+
+  const [filter, setFilter] = useState<FilterTab>("모두");
   const [search, setSearch] = useState("");
 
-  const debouncedSearch = useDebouncedValue(search, 400);
+  const { filtered, grouped } = useFilteredFoods(foods, filter, search);
 
-  const filteredFoods = foods.filter((food) => {
-    const matchesFilter = filter === "모두" || food.storageType === filter;
-    const matchesSearch =
-      food.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-      food.productName.toLowerCase().includes(debouncedSearch.toLowerCase());
-    return matchesFilter && matchesSearch;
-  });
+  const onMinus = (id: string, current?: number) =>
+    updateFood(id, { quantity: Math.max(0, (current ?? 0) - 1) });
+  const onPlus = (id: string, current?: number) =>
+    updateFood(id, { quantity: (current ?? 0) + 1 });
+
+  const goDetail = (barCode: string) => navigate(`/detail?barcode=${barCode}`);
 
   return (
-    <>
+    <div className="storage-page">
       <Header />
-      <div className="storage-header">
-        <div className="filter-buttons">
-          {["모두", "냉장", "냉동", "실온"].map((type) => (
+
+      <div className="storage-top">
+        <div className="filter-pills">
+          {(["모두", "냉동실", "냉장실", "실온"] as FilterTab[]).map((tab) => (
             <button
-              key={type}
-              className={filter === type ? "active" : ""}
-              onClick={() => setFilter(type as typeof filter)}
+              key={tab}
+              type="button"
+              className={`pill ${filter === tab ? "active" : ""}`}
+              onClick={() => setFilter(tab)}
             >
-              {type}
+              {tab}
             </button>
           ))}
         </div>
-        <div className="search-bar">
+
+        <div className="search-wrap">
           <input
             type="text"
-            placeholder=" 내 냉장고 속 검색"
+            placeholder="나의 냉장고 속 검색"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
       </div>
-      <div className="storage-container">
-        <div className="food-list">
-          {filteredFoods.map((food) => (
-            <div
-              key={food.id}
-              className="food-card"
-              onClick={() => navigate(`/detail?barcode=${food.barCode}`)}
-            >
-              <div>
-                <div className="name">{food.name}</div>
-                <div className="manufacturer">{food.manufacturer}</div>
+
+      {filter === "모두" ? (
+        <div className="board board--grouped">
+          {(["냉동", "냉장", "실온"] as const).map((key) => (
+            <section className="column-panel" key={key}>
+              <div className="column-list">
+                {grouped[key].map((f) => (
+                  <ItemCard
+                    key={f.id}
+                    food={f}
+                    onClick={() => goDetail(f.barCode)}
+                    onMinus={onMinus}
+                    onPlus={onPlus}
+                  />
+                ))}
+                {grouped[key].length === 0 && <p className="empty">텅! 해당 보관에 상품이 없어요,,,</p>}
               </div>
-              <div className="food-actions">
-                <div className="quantity-control">
-                  남은수량: {food.quantity}
-                  {food.unit}
-                </div>
-                <div
-                  className="D-day"
-                  style={{ color: calculateDDay(food.endDate).color }}
-                >
-                  {calculateDDay(food.endDate).label}
-                </div>
-              </div>
-            </div>
+            </section>
           ))}
-          {filteredFoods.length === 0 && <p>검색 결과가 없습니다.</p>}
         </div>
-      </div>
-    </>
+      ) : (
+        <div className="filter-board">
+          {filtered.map((f) => (
+            <ItemCard
+              key={f.id}
+              food={f}
+              onClick={() => goDetail(f.barCode)}
+              onMinus={onMinus}
+              onPlus={onPlus}
+            />
+          ))}
+          {filtered.length === 0 && <p className="empty">검색 결과가 없습니다.</p>}
+        </div>
+      )}
+    </div>
   );
 }

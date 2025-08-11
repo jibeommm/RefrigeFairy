@@ -1,80 +1,173 @@
-.storage-container {
-  width: 80vw;
-  background: #6d9660;
-  border-radius: 20px;
-  color: white;
-  margin-bottom: 5vw;
+/* /src/pages/StoragePage/StoragePage.css */
+.storage-page {
+  width: 100%;
+  width: 1024px;
+  margin: 0 auto;
 }
 
-.food-list {
+.storage-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin: 12px 0 18px;
+}
+
+.pill{
+  min-width:92px;
+  padding:10px 16px;
+  border:none;
+  border-radius:28px;
+  background:#e9f2e6;
+  color: var(--green);
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow: 0 2px 0 rgba(0,0,0,.06) inset;
+}
+.pill.active{
+  background: var(--green);
+  color:#fff;
+}
+
+
+.search-wrap{
+  display:flex;
+  align-items:center;
+  padding: 10px 16px;
+  background:var(--green);
+  border-radius:20px;
+  width: 260px;
+  height: 27px;
+}
+.search-wrap input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+.search-wrap input::placeholder {
+  color: #fff;
+  font-weight: 500;
+}
+
+.board{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.item-left{ 
+  display:flex; 
+  flex-direction:column; 
+  align-items:flex-start; 
+  gap: 4px;
+}
+
+.item-card{
+  padding:22px;
+  border-radius:18px;
+  color:#fff;
+  display:flex;
+  justify-content: space-between;
+  align-items:flex-start;
+  cursor:pointer;
+}
+
+.item-name{
+  font-size:26px;
+  font-weight:900;
+}
+
+.item-manufacturer{
+  font-size:20px;
+  font-weight:500;
+  color:#ccc;
+}
+
+.qty-pill{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  min-width: 120px;  
+  height: 40px;
+  background: var(--deep);
+  border-radius: 10px;
+}
+
+.qty-ghost{
+  width: 36px;
+  height: 32px;
+  margin-right: 0;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .08s ease, transform .06s ease;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+.qty-ghost:hover { background: rgba(255,255,255,.08); }
+
+.d-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  font-size:22px;
+  font-weight:900;
+  margin-top:6px;
+  width: 100%;
+  height:40px;
+}
+.d-badge.ok{ background: var(--green); color:#e9ffe9; }
+.d-badge.warning{ background:#ffb545; color:#fff; }
+.d-badge.danger{ background:#ff6363; color:#fff; }
+.d-badge.dark{ background:#111; color:#fff; }
+.d-badge.neutral{ background:#ccc; color:#333; }
+
+.item-right{ 
+  display:flex; 
+  flex-direction:column; 
+  align-items:flex-end; 
+}
+
+.chip{
+  background:#e9f2e6;
+  color:#2d4f2b;
+  border-radius:18px;
+  padding:6px 12px;
+  font-weight:800;
+  font-size:14px;
+}
+
+.column-panel{
+  background: #6f9365;
+  border-radius: 18px;
+  width: 500px;
+  box-shadow: 0 16px 30px rgba(0,0,0,.10);
+}
+
+.column-list{
   display: flex;
   flex-direction: column;
-  padding: 2vw;
 }
 
-.food-card {
-  padding: 1vw;
-  display: flex;
-  justify-content: space-between
+.filter-board{
+  background-color: var(--green);
+  border-radius: 18px;
 }
 
-.name {
-  font-size: 3vw;
+.empty {
+  color: #fff;
+  font-size: 30px;
   font-weight: 700;
-  color: white;
-}
-
-.manufacturer {
-  font-size: 2vw;
-  font-weight: 500;
-  color: #f0f0f0;
-}
-
-.food-actions {
-  display: flex;
-  gap: 2vw;
-  font-size: 2vw;
-  font-weight: 500;
-}
-
-.filter-buttons {
-  display: flex;
-  margin: 1vw;
-  gap: 1vw;
-}
-
-.filter-buttons button {
-  width: 10vw;
-  padding: 1vw;
-  border: #6d9660 1px solid;
-  background: #cde5c0;
-  color: #6d9660;
-  border-radius: 30px;
-  font-size: 2vw;
-  font-weight: 700;
-}
-
-.filter-buttons button.active {
-  background: #6d9660;
-  color: white;
-  font-weight: 700;
-}
-
-.storage-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.storage-header input{
-  width: 25vw;
-  font-size: 2.5vw;
-  font-weight: 500;
-  align-items: center;
-  border: none;
-  background-color: white;
-  outline: none;
-  color: #6d9660;
-  border-radius: 20px;
-  padding: 1vw;
+  text-align: center;
+  padding: 20px;
 }
