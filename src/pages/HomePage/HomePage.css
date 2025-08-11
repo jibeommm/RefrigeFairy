@@ -1,0 +1,74 @@
+/* /src/pages/HomPage/HomePage.css */
+
+.homepage-container {
+  width: 1024px;
+}
+
+.brand-section {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 8px;
+}
+
+.brand-title {
+  margin: 0;
+  font-size: 76px;
+  font-weight: 900;
+  color: var(--deep);
+}
+
+.search-row {
+  display: flex;
+  justify-content: center;
+  margin: 44px 0 44px;
+}
+
+.card-grid {
+  display: flex;
+  justify-content: space-between
+}
+
+.feature-card {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  background: var(--green);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  border-radius: 22px;
+  padding: 32px;
+  color: #fff;
+  width: 480px;
+  height: 380px;
+  margin: 0;
+  transition: transform .08s ease, box-shadow .08s ease, filter .08s ease;
+}
+
+.card-text {
+  font-size: 44px; 
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.notification-container {
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    border-radius: 22px;
+    width: 320px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.notification-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    padding: 8px 12px;
+    font-size: 24px;
+    font-weight: 800;
+}
