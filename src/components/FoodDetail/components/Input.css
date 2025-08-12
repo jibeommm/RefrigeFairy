@@ -1,4 +1,5 @@
 /* /src/components/FoodDetail/components/Input.css */
+
 .fd-input {
   border: none; 
   outline: none;
@@ -9,13 +10,13 @@
   padding: 0;
 }
 
-.fd-text.fd-title-input {
+.fd-text.title-input {
   font-size: 50px;
   font-weight: 900;
   color: #fff;
   padding: 0;
 } 
-.fd-title-input {
+.title-input {
   font-size: 50px;
   font-weight: 900;
   color: #fff;
@@ -23,8 +24,7 @@
 }
 
 .fd-input.qty-input { 
-  min-width: 40px;
-  width: auto;
+  width: 100px;
   text-align: center;
 }
 
@@ -42,7 +42,7 @@
   text-align: center;
 }
 
-.fd-edit-btn {
+.edit-btn {
   margin-left: 10px;
   border: none; 
   background-color: var(--green);
@@ -55,7 +55,7 @@
   cursor: pointer; 
   font-size: 24px;
 }
-.fd-edit-btn:hover { 
+.edit-btn:hover { 
   background: rgba(255,255,255,.1);
 }
 
@@ -65,14 +65,3 @@
   gap: 0;
 }
 
-.fd-row {
-    display: flex; 
-    align-items: center; 
-    margin: 12px 0;
-    gap: 30px;
-    height: 40px;
-    font-size: 24px;
-    font-weight: 700;
-    color: #fff;
-    padding: 0;
-}
