@@ -1,0 +1,47 @@
+/* src/css/circularProgressStyles.css */
+
+.quantity-ring .CircularProgressbar-path {
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease 0s;
+  stroke-width: 30px;
+}
+
+.quantity-ring .CircularProgressbar-trail {
+  stroke-width: 30px;
+  stroke: #fff;
+}
+
+.item-qty-progress.quantity-ring {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+
+.quantity-ring.ok .CircularProgressbar-path {
+  stroke: var(--deep);
+}
+
+.quantity-ring.warning .CircularProgressbar-path {
+  stroke: #ff9800; 
+}
+
+.quantity-ring.danger .CircularProgressbar-path {
+  stroke: #f44336; 
+}
+
+.quantity-ring.neutral .CircularProgressbar-path {
+  stroke: #9e9e9e;
+}
+
+.quantity-ring.dark .CircularProgressbar-path {
+  stroke: #616161;
+}
+
+
+.quantity-ring .CircularProgressbar-text {
+  display: none;
+}
+
+

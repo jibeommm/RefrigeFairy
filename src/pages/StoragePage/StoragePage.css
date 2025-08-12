@@ -29,7 +29,6 @@
   color:#fff;
 }
 
-
 .search-wrap{
   display:flex;
   align-items:center;
@@ -86,56 +85,17 @@
   color:#ccc;
 }
 
-.qty-pill{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
-  min-width: 120px;  
-  height: 40px;
-  background: var(--deep);
-  border-radius: 10px;
-}
-
-.qty-ghost{
-  width: 36px;
-  height: 32px;
-  margin-right: 0;
-  border: none;
-  background: transparent;
-  color: #fff;
-  font-size: 22px;
-  font-weight: 900;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background .08s ease, transform .06s ease;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-}
-.qty-ghost:hover { background: rgba(255,255,255,.08); }
-
-.d-badge{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:10px;
-  font-size:22px;
-  font-weight:900;
-  margin-top:6px;
-  width: 100%;
-  height:40px;
-}
-.d-badge.ok{ background: var(--green); color:#e9ffe9; }
-.d-badge.warning{ background:#ffb545; color:#fff; }
-.d-badge.danger{ background:#ff6363; color:#fff; }
-.d-badge.dark{ background:#111; color:#fff; }
-.d-badge.neutral{ background:#ccc; color:#333; }
-
 .item-right{ 
   display:flex; 
   flex-direction:column; 
   align-items:flex-end; 
+  gap: 10px;
+}
+
+.item-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .chip{
