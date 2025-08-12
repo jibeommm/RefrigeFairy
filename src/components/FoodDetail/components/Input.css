@@ -1,0 +1,78 @@
+/* /src/components/FoodDetail/components/Input.css */
+.fd-input {
+  border: none; 
+  outline: none;
+  color: #fff;
+  background-color: transparent;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 0;
+}
+
+.fd-text.fd-title-input {
+  font-size: 50px;
+  font-weight: 900;
+  color: #fff;
+  padding: 0;
+} 
+.fd-title-input {
+  font-size: 50px;
+  font-weight: 900;
+  color: #fff;
+  padding: 0;
+}
+
+.fd-input.qty-input { 
+  min-width: 40px;
+  width: auto;
+  text-align: center;
+}
+
+.fd-input.period-value-input {
+  min-width: 40px;
+  width: auto;
+  text-align: center;
+}
+
+.fd-input.custom-unit-input {
+  min-width: 100px;
+  width: auto;
+  margin-left: 8px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.fd-edit-btn {
+  margin-left: 10px;
+  border: none; 
+  background-color: var(--green);
+  color: #fff; 
+  width: 30px; 
+  height: 30px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  cursor: pointer; 
+  font-size: 24px;
+}
+.fd-edit-btn:hover { 
+  background: rgba(255,255,255,.1);
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.fd-row {
+    display: flex; 
+    align-items: center; 
+    margin: 12px 0;
+    gap: 30px;
+    height: 40px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    padding: 0;
+}
