@@ -12,7 +12,6 @@
   overflow-y: auto;
 }
 
-/* 팝오버 타이틀 */
 .notifications-popover h4 {
   margin: 0 0 16px;
   font-size: 40px;
@@ -26,7 +25,6 @@
   padding-bottom: 4px;
 }
 
-/* 알림 아이템 공통 */
 .notification-item {
   display: flex;
   align-items: center;

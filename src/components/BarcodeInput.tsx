@@ -14,7 +14,6 @@ export default function BarcodeInput({ variant = "app" }: BarcodeInputProps) {
 
   const handleSearch = () => {
     const trimmed = barcode.trim();
-    if (!trimmed) return; 
     navigate(`/register?barcode=${trimmed}`);
   };
 
@@ -25,7 +24,6 @@ export default function BarcodeInput({ variant = "app" }: BarcodeInputProps) {
         placeholder="바코드를 입력해줘!"
         value={barcode}
         onChange={(e) => setBarcode(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
       <div className="actions">
         <button type="button" className="icon-btn search" onClick={handleSearch} title="검색">

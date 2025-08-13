@@ -2,17 +2,16 @@
 
 import "./DBadge.css";
 
-type BadgeTone = 'ok' | 'warning' | 'danger' | 'dark' | 'neutral';
+type BadgeTone = 'ok' | 'warning' | 'danger' | 'dark';
 
 interface DBadgeProps {
   text: string;
   tone: BadgeTone;
-  className?: string;
 }
 
-export default function DBadge({ text, tone, className = "" }: DBadgeProps) {
+export default function DBadge({ text, tone}: DBadgeProps) {
   return (
-    <div className={`d-badge ${tone} ${className}`}>
+    <div className={`d-badge ${tone}`}>
       {text}
     </div>
   );

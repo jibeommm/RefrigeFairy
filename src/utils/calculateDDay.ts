@@ -1,14 +1,18 @@
 // src/utils/calculateDDay.ts
 
-import type { ExpirySettings } from '../hooks/useSettings';
+// Define ExpirySettings type here if not exported from useSettings
+type ExpirySettings = {
+  warningDays: number;
+  dangerDays: number;
+};
 
-type ColorType = "red" | "orange" | "white" | "gray" | "black";
+type ColorType = "red" | "orange" | "white" | "black";
 
 export function calculateDDay(
   endDate: string,
   settings: ExpirySettings
 ): { label: string; color: ColorType; days: number } {
-  if (!endDate) return { label: "정보 없음", color: "gray", days: 0 };
+  if (!endDate) return { label: "정보 없음", color: "white", days: 0 };
 
   const { warningDays, dangerDays } = settings;
 

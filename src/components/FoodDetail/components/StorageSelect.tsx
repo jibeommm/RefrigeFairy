@@ -1,25 +1,11 @@
-// src/components/FoodDetail/components/StorageSelect.tsx
-
+// /src/components/FoodDetail/components/StorageSelect.tsx
 import Select from 'react-select';
 import type { StorageType } from '../../../types/food';
-
-interface StorageOption {
-  value: StorageType;
-  label: string;
-}
-
-const STORAGE_OPTIONS: StorageOption[] = [
-  { value: "냉동", label: "냉동"},
-  { value: "냉장", label: "냉장"},
-  { value: "실온", label: "실온" },
-  { value: "정보 없음", label: "정보 없음" }
-];
-
+import { STORAGE_OPTIONS } from '../../../utils/constants';
 
 interface StorageSelectProps {
   value?: StorageType;
   onChange: (value: StorageType) => void;
-  className?: string;
 }
 
 export default function StorageSelect({ 
@@ -28,12 +14,11 @@ export default function StorageSelect({
 }: StorageSelectProps) {
   const currentOption = STORAGE_OPTIONS.find(opt => opt.value === value);
 
-  const handleChange = (option: StorageOption | null) => {
+  const handleChange = (option: { value: StorageType; label: string } | null) => {
     if (option) {
       onChange(option.value);
     }
   };
-
 
   return (
     <Select

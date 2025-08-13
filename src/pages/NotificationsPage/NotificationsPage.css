@@ -1,4 +1,4 @@
-/* 알림 페이지 전체 레이아웃 — 스토리지 페이지와 동일 */
+
 .notifications-page {
   width: 100%;
   max-width: 1024px;
@@ -12,9 +12,8 @@
   margin: 12px 0 18px;
 }
 
-/* 필터 버튼 */
 .pill {
-  min-width: 120px; /* 알림 페이지는 라벨이 길어서 조금 넓게 */
+  min-width: 120px;
   padding: 10px 16px;
   border: none;
   border-radius: 28px;
@@ -30,7 +29,6 @@
   color: #fff;
 }
 
-/* 공통 아이템 카드 영역 */
 .board {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -78,17 +76,7 @@
   gap: 8px;
 }
 
-/* 경고/위험 표시 칩 */
-.chip {
-  background: #e9f2e6;
-  color: #2d4f2b;
-  border-radius: 18px;
-  padding: 6px 12px;
-  font-weight: 800;
-  font-size: 14px;
-}
 
-/* 카테고리 별 컬럼 */
 .column-panel {
   background: #6f9365;
   border-radius: 18px;
@@ -101,13 +89,11 @@
   flex-direction: column;
 }
 
-/* 필터 적용된 보드 */
 .filter-board {
   background-color: var(--green);
   border-radius: 18px;
 }
 
-/* 빈 상태 */
 .empty {
   color: #fff;
   font-size: 30px;

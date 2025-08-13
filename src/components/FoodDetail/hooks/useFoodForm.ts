@@ -1,23 +1,18 @@
-// src/components/FoodDetail/hooks/useFoodForm.ts
-import { useState, useEffect, useMemo } from "react";
+// /src/components/FoodDetail/hooks/useFoodForm.ts
+import { useState, useEffect } from "react";
 import { useFoodStore } from "../../../stores/foodStore";
 import { parseExpire } from "../../../utils/parseExpire";
 import { calculateEndDate } from "../../../utils/calculateEndDate";
+import { DEFAULT_STORAGE, toStorageType } from "../../../utils/constants";
 import { parseQuantity } from "../../../utils/parseQuantity";
-import { UNIT_OPTIONS, toStorageType, DEFAULT_STORAGE } from "../../../utils/constants";
 import type { Food } from "../../../types/food";
-
-import { useSettings } from "../../../hooks/useSettings";
-import { dBadge } from "../../../pages/StoragePage/helpers";
 
 export function useFoodForm(food: Food) {
   const { updateFood } = useFoodStore();
   const { storage, period } = parseExpire(food.expireDays);
   const today = new Date().toISOString().split("T")[0];
-  const { quantity: parsedQty, unit: parsedUnit } = parseQuantity(food.productName);
 
-  const initialUnit = food.unit ?? parsedUnit;
-  const initialIsCustom = initialUnit ? !UNIT_OPTIONS.includes(initialUnit as any) : false;
+  const smartDefaults = parseQuantity(food.productName || "");
 
   const [formData, setFormData] = useState<Partial<Food>>({
     name: food.name,
@@ -28,18 +23,14 @@ export function useFoodForm(food: Food) {
     midCategory: food.midCategory,
     smallCategory: food.smallCategory,
     expireDays: food.expireDays,
-    storageType: toStorageType(food.storageType) ?? toStorageType(storage) ?? DEFAULT_STORAGE,
+    storageType: food.storageType || toStorageType(storage) || DEFAULT_STORAGE,
     expirePeriod: food.expirePeriod || period,
     buyDate: food.buyDate || today,
     endDate: food.endDate || calculateEndDate(food.buyDate || today, food.expirePeriod || period),
-    quantity: food.quantity ?? parsedQty,
-    originalQuantity: food.originalQuantity ?? parsedQty,
-    unit: initialIsCustom ? "" : initialUnit,
+    quantity: food.quantity ?? smartDefaults.quantity,
+    originalQuantity: food.originalQuantity ?? smartDefaults.quantity,
+    unit: food.unit ?? smartDefaults.unit,
   });
-
-  const [customUnit, setCustomUnit] = useState(initialIsCustom ? initialUnit ?? "" : "");
-
-  const settings = useSettings();
 
   useEffect(() => {
     if (formData.buyDate && formData.expirePeriod) {
@@ -51,21 +42,13 @@ export function useFoodForm(food: Food) {
     }
   }, [formData.buyDate, formData.expirePeriod, food.endDate, food.id, updateFood]);
 
-  const left = useMemo(() => {
-    return dBadge(formData.endDate ?? "", settings);
-  }, [formData.endDate, settings]);
-
-  const setAndSave = <K extends keyof Food>(key: K, value: Food[K]) => {
+  const setAndSave = (key: string, value: any) => {
     setFormData((p) => ({ ...p, [key]: value }));
     updateFood(food.id, { [key]: value } as Partial<Food>);
   };
 
   return {
     formData,
-    setFormData,
-    customUnit,
-    setCustomUnit,
-    left,   
     setAndSave
   };
 }

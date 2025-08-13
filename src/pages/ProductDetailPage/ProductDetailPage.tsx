@@ -16,7 +16,6 @@ export default function ProductDetailPage() {
   const { foods, removeFood } = useFoodStore();
 
   useEffect(() => {
-    console.log('URL 파라미터 변경됨:', { barcode, id });
   }, [barcode, id]);
 
   const foodInfo = foods.find((food) => {

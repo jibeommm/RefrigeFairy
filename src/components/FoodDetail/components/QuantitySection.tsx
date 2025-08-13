@@ -1,22 +1,10 @@
-// src/components/FoodDetail/components/QuantitySection.tsx
-
 import type { Food } from "../../../types/food";
 import Select from 'react-select';
 import QtyControl from '../../QtyControl';
 import Input from './Input';
+import { UNIT_OPTIONS } from '../../../utils/constants';
+import { adjustQuantity, validateQuantity } from '../../../utils/quantityUtils';
 import "../selectStyles.css";
-
-const UNIT_OPTIONS = [
-  { value: "개", label: "개" },
-  { value: "개입", label: "개입" },
-  { value: "g", label: "g" },
-  { value: "kg", label: "kg" },
-  { value: "ml", label: "ml" },
-  { value: "L", label: "L" },
-  { value: "봉지", label: "봉지" },
-  { value: "병", label: "병" },
-  { value: "캔", label: "캔" }
-];
 
 interface QuantitySectionProps {
   formData: Partial<Food>;
@@ -25,7 +13,7 @@ interface QuantitySectionProps {
 
 export default function QuantitySection({ formData, setAndSave }: QuantitySectionProps) {
   const onQty = (delta: number) => {
-    const next = Math.max(0, (formData.quantity ?? 0) + delta);
+    const next = adjustQuantity(formData.quantity ?? 0, delta);
     setAndSave("quantity", next);
   };
 
@@ -52,7 +40,7 @@ export default function QuantitySection({ formData, setAndSave }: QuantitySectio
       <Input
         type="number"
         value={formData.originalQuantity ?? 10}
-        onSave={(v) => setAndSave("originalQuantity", Math.max(0, Number(v || 0)))}
+        onSave={(v) => setAndSave("originalQuantity", validateQuantity(v))} 
         className="qty-input"
       />
       

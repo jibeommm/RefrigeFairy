@@ -1,4 +1,5 @@
-// /src/components/FoodDetail/components/CategorySection.tsx
+// src/components/FoodDetail/components/CategorySection.tsx
+
 import React from 'react';
 import type { Food } from "../../../types/food";
 import Select from 'react-select';
@@ -27,98 +28,42 @@ export default function CategorySection({ formData, setAndSave, apiData }: Categ
     }
   }, [apiData]);
 
-  const handleCategoryChange = (level: 'big' | 'mid' | 'small', selectedOption: CategoryOption | null) => {
+  const handleCategoryChange = (level: string, selectedOption: CategoryOption | null) => {
+    const value = selectedOption?.value || '';
+    setAndSave(`${level}Category`, value);
+    
     if (level === 'big') {
-      setAndSave('bigCategory', selectedOption?.value || '');
       setAndSave('midCategory', '');
       setAndSave('smallCategory', '');
     } else if (level === 'mid') {
-      setAndSave('midCategory', selectedOption?.value || '');
       setAndSave('smallCategory', '');
-    } else {
-      setAndSave('smallCategory', selectedOption?.value || '');
     }
   };
 
-  const getMidOptions = () => {
+  const createValue = (value: string | undefined): CategoryOption | null => {
+    if (!value) return null;
+    return { value, label: value };
+  };
+
+  const midOptions = React.useMemo(() => {
     const bigCat = formData.bigCategory || "";
     const predefinedOptions = MID_CATEGORIES[bigCat] || [];
     
     if (formData.midCategory && !predefinedOptions.find(opt => opt.value === formData.midCategory)) {
-      return [
-        ...predefinedOptions,
-        { value: formData.midCategory, label: formData.midCategory }
-      ];
+      predefinedOptions.push({ value: formData.midCategory, label: formData.midCategory });
     }
     
     return predefinedOptions;
-  };
-
-  const getBigCategoryValue = (): CategoryOption | null => {
-    if (!formData.bigCategory) return null;
-    
-    const found = BIG_CATEGORIES.find(cat => cat.value === formData.bigCategory);
-    
-    if (!found && formData.bigCategory) {
-      return { value: formData.bigCategory, label: formData.bigCategory };
-    }
-    
-    return found || null;
-  };
-
-  const getMidCategoryValue = (): CategoryOption | null => {
-    if (!formData.midCategory) return null;
-    
-    const midOptions = getMidOptions();
-    const found = midOptions.find(cat => cat.value === formData.midCategory);
-    
-    if (!found && formData.midCategory) {
-      return { value: formData.midCategory, label: formData.midCategory };
-    }
-    
-    return found || null;
-  };
-
-  const getSmallCategoryValue = (): CategoryOption | null => {
-    if (!formData.smallCategory) return null;
-    
-    const found = SMALL_CATEGORIES.find(cat => cat.value === formData.smallCategory);
-    
-    if (!found && formData.smallCategory) {
-      return { value: formData.smallCategory, label: formData.smallCategory };
-    }
-    
-    return found || null;
-  };
-
-  const getBigOptions = () => {
-    const predefinedOptions = [...BIG_CATEGORIES];
-    
-    if (formData.bigCategory && !predefinedOptions.find(opt => opt.value === formData.bigCategory)) {
-      predefinedOptions.push({ value: formData.bigCategory, label: formData.bigCategory });
-    }
-    
-    return predefinedOptions;
-  };
-
-  const getSmallOptions = () => {
-    const predefinedOptions = [...SMALL_CATEGORIES];
-    
-    if (formData.smallCategory && !predefinedOptions.find(opt => opt.value === formData.smallCategory)) {
-      predefinedOptions.push({ value: formData.smallCategory, label: formData.smallCategory });
-    }
-    
-    return predefinedOptions;
-  };
+  }, [formData.bigCategory, formData.midCategory]);
 
   return (
     <div className="fd-row">
       <span className="fd-label">분류</span>
       <div className="fd-category-group">
         <Select
-          value={getBigCategoryValue()}
-          onChange={(selectedOption) => handleCategoryChange('big', selectedOption)}
-          options={getBigOptions()}
+          value={createValue(formData.bigCategory)}
+          onChange={(option) => handleCategoryChange('big', option)}
+          options={BIG_CATEGORIES}
           placeholder="대분류 선택"
           className="react-select-container"      
           classNamePrefix="react-select"          
@@ -127,9 +72,9 @@ export default function CategorySection({ formData, setAndSave, apiData }: Categ
         />
 
         <Select
-          value={getMidCategoryValue()}
-          onChange={(selectedOption) => handleCategoryChange('mid', selectedOption)}
-          options={getMidOptions()}
+          value={createValue(formData.midCategory)}
+          onChange={(option) => handleCategoryChange('mid', option)}
+          options={midOptions}
           placeholder="중분류 선택"
           className="react-select-container"      
           classNamePrefix="react-select"          
@@ -139,9 +84,9 @@ export default function CategorySection({ formData, setAndSave, apiData }: Categ
         />
 
         <Select
-          value={getSmallCategoryValue()}
-          onChange={(selectedOption) => handleCategoryChange('small', selectedOption)}
-          options={getSmallOptions()}
+          value={createValue(formData.smallCategory)}
+          onChange={(option) => handleCategoryChange('small', option)}
+          options={SMALL_CATEGORIES}
           placeholder="소분류 선택"
           className="react-select-container"      
           classNamePrefix="react-select"          

@@ -76,7 +76,7 @@ export default function SettingsPopover({ isOpen, onClose, children }: SettingsP
 
       onClose();
     } catch (error) {
-      console.error('설정 저장 실패:', error);
+      console.error(error);
     }
   };
 

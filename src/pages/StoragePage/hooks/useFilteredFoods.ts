@@ -20,7 +20,7 @@ export function useFilteredFoods(foods: Food[], filter: FilterTab, search: strin
       return okFilter && okSearch;
     });
 
-    return [...list].sort((a, b) => (b.updatedAt ?? 0) - (a.updatedAt ?? 0));
+    return list;
   }, [foods, filter, debouncedSearch]);
 
   const grouped = useMemo(() => groupByStorage(filtered), [filtered]);

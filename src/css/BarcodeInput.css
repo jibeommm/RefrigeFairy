@@ -50,7 +50,6 @@
 
 .icon-placeholder{ font-size:22px; line-height:1; color:#6d9660; }
 
-/* 헤더 변형(있다면) */
 .barcode-input-container.header{
   display:flex; align-items:center; background:#fff;
   border-radius:12px; width:420px; height:50px; padding:0 8px;

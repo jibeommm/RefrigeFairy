@@ -16,23 +16,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./selectStyles.css";
 
 export default function FoodDetail({ food }: { food: Food }) {
-  const {
-    formData,
-    left,
-    setAndSave
-  } = useFoodForm(food);
-
+  const { formData, setAndSave } = useFoodForm(food);
   const { data: barcodeData } = useBarcodeQuery(food.barCode || '');
-
-  const handleSetAndSave = (key: string, value: any) => {
-    setAndSave(key as keyof Food, value);
-  };
 
   return (
     <div className="fd-card">
       <Input
         value={formData.name ?? ""}
-        onSave={(v) => handleSetAndSave("name", v)}
+        onSave={(newValue) => setAndSave("name" as keyof Food, newValue)}
         className="title-input"
       />
 
@@ -40,7 +31,7 @@ export default function FoodDetail({ food }: { food: Food }) {
         <span className="fd-label">상품명</span>
         <Input
           value={formData.productName ?? "정보 없음"}
-          onSave={(v) => handleSetAndSave("productName", v)}
+          onSave={(newValue) => setAndSave("productName" as keyof Food, newValue)}
         />
       </div>
 
@@ -48,30 +39,29 @@ export default function FoodDetail({ food }: { food: Food }) {
         <span className="fd-label">판매처</span>
         <Input
           value={formData.manufacturer ?? formData.cmpnyName ?? "정보 없음"}
-          onSave={(v) => handleSetAndSave("manufacturer", v)}
+          onSave={(newValue) => setAndSave("manufacturer" as keyof Food, newValue)}
         />
       </div>
 
-      <CategorySection formData={formData} setAndSave={handleSetAndSave} />
+      <CategorySection formData={formData} setAndSave={setAndSave} />
 
       <div className="fd-row">
         <span className="fd-label">보관방법</span>
         <StorageSelect
           value={formData.storageType ?? DEFAULT_STORAGE}
-          onChange={(value) => handleSetAndSave("storageType", value)}
+          onChange={(value) => setAndSave("storageType" as keyof Food, value)}
         />
       </div>
 
       <DateSection 
         formData={formData} 
-        setAndSave={handleSetAndSave} 
-        left={left} 
+        setAndSave={setAndSave} 
         apiData={barcodeData as any}
       />
 
       <div className="fd-row">
         <span className="fd-label">현재 수량 / 남은 수량 (단위)</span>    
-        <QuantitySection formData={formData} setAndSave={handleSetAndSave} />
+        <QuantitySection formData={formData} setAndSave={setAndSave} />
       </div>
     </div>
   );

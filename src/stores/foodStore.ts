@@ -41,9 +41,8 @@ export const useFoodStore = create<FoodStore>()(
         set((state) => ({ foods: state.foods.filter((f) => f.id !== id) })),
 
       updateFood: (id, updates) =>
-        set((state) => {
-          const updatedAt = Date.now();
-          const next = state.foods.map((f) =>
+        set((state) => ({
+          foods: state.foods.map((f) =>
             f.id === id
               ? {
                   ...f,
@@ -52,14 +51,11 @@ export const useFoodStore = create<FoodStore>()(
                     updates.originalQuantity !== undefined
                       ? updates.originalQuantity
                       : f.originalQuantity,
-                  updatedAt,
+                  updatedAt: Date.now(),
                 }
               : f
-          );
-          const target = next.find((f) => f.id === id);
-          const others = next.filter((f) => f.id !== id);
-          return target ? { foods: [target, ...others] } : { foods: next };
-        }),
+          ),
+        })),
     }),
     { name: "food-storage" }
   )

@@ -5,17 +5,13 @@ const API_KEY = import.meta.env.VITE_FOOD_API_KEY as string;
 
 
 export async function fetchBarcode(barcode: string): Promise<Food> {
-  if (!barcode) throw new Error("바코드가 필요합니다.");
-
   const urlC005 = `http://openapi.foodsafetykorea.go.kr/api/${API_KEY}/C005/json/1/5/BAR_CD=${barcode}`;
   const res1 = await fetch(urlC005);
-  if (!res1.ok) throw new Error("C005 API 호출 실패");
   const data1 = await res1.json();
   const item1 = data1?.C005?.row?.[0];
 
   const urlI2570 = `http://openapi.foodsafetykorea.go.kr/api/${API_KEY}/I2570/json/1/5/BRCD_NO=${barcode}`;
   const res2 = await fetch(urlI2570);
-  if (!res2.ok) throw new Error("C005 API 호출 실패");
   const data2 = await res2.json().catch(() => null);
   const item2 = data2?.I2570?.row?.[0];
 

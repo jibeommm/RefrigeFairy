@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { useFoodStore } from "../../stores/foodStore";
 import ItemCard from "../StoragePage/components/ItemCard";
-import type { Food } from "../../types/food";
+
 import { useSettings } from "../../hooks/useSettings";
 import { dBadge } from "../StoragePage/helpers";
+import { getQtyTone, adjustQuantity } from "../../utils/quantityUtils";
 import "./NotificationsPage.css";
 
 export default function NotificationsPage() {
@@ -16,14 +17,6 @@ export default function NotificationsPage() {
   const [filter, setFilter] = useState<"모두" | "유통기한 경고" | "수량 경고">("모두");
   const [search, setSearch] = useState("");
 
-  const getQtyTone = (f: Food) => {
-    if (!f.originalQuantity) return "ok";
-    const percent = ((f.quantity ?? 0) / f.originalQuantity) * 100;
-    if (percent <= settings.quantityDangerPercent) return "danger";
-    if (percent <= settings.quantityWarningPercent) return "warning";
-    return "ok";
-  };
-
   const filteredFoods = foods.filter((f) => {
     const matchesSearch = search === "" || 
       f.name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -31,7 +24,6 @@ export default function NotificationsPage() {
       f.manufacturer?.toLowerCase().includes(search.toLowerCase());
 
     if (!matchesSearch) return false;
-
     if (filter === "모두") return true;
 
     if (filter === "유통기한 경고") {
@@ -40,7 +32,7 @@ export default function NotificationsPage() {
     }
 
     if (filter === "수량 경고") {
-      const tone = getQtyTone(f);
+      const tone = getQtyTone(f, settings);
       return tone === "danger" || tone === "warning";
     }
 
@@ -48,10 +40,10 @@ export default function NotificationsPage() {
   });
 
   const onMinus = (id: string, current?: number) =>
-    updateFood(id, { quantity: Math.max(0, (current ?? 0) - 1) });
+    updateFood(id, { quantity: adjustQuantity(current ?? 0, -1) });
 
   const onPlus = (id: string, current?: number) =>
-    updateFood(id, { quantity: (current ?? 0) + 1 });
+    updateFood(id, { quantity: adjustQuantity(current ?? 0, 1) });
 
   const goDetail = (barCode: string) => navigate(`/detail?barcode=${barCode}`);
 

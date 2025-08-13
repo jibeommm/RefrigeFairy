@@ -1,5 +1,4 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFoodStore } from "../../stores/foodStore";
 import type { Food } from "../../types/food";
 import "./RegisterFood.css";
@@ -7,17 +6,7 @@ import Header from "../../components/Header";
 import FoodDetail from "../../components/FoodDetail/FoodDetail";
 import { useBarcodeQuery } from "../../hooks/useBarcodeQuery";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60,
-    },
-  },
-});
-
-function RegisterFoodContent() {
+export default function RegisterFood() {
   const [searchParams] = useSearchParams();
   const barcode = (searchParams.get("barcode") || "").trim();
   const navigate = useNavigate();
@@ -55,13 +44,5 @@ function RegisterFoodContent() {
         )}
       </div>
     </>
-  );
-}
-
-export default function RegisterFood() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <RegisterFoodContent />
-    </QueryClientProvider>
   );
 }

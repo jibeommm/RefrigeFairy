@@ -1,20 +1,20 @@
 // src/components/FoodDetail/components/DateSection.tsx
+
 import DatePicker from "react-datepicker";
 import { ko } from 'date-fns/locale';
-import { addDays } from 'date-fns';
 import { useEffect } from 'react';
 import Input from "./Input";
 import PeriodUnitSelect, { type PeriodUnit } from "./PeriodUnitSelect";
-import DBadge, { type BadgeTone } from '../../DBadge/DBadge';
+import DBadge from '../../DBadge/DBadge';
 import { useSettings } from '../../../hooks/useSettings';
 import { dBadge } from '../../../pages/StoragePage/helpers';
+import { calculateEndDate } from '../../../utils/calculateEndDate';
 import { parseExpire } from '../../../utils/parseExpire';
 import "../datepickerStyles.css";
 
 interface DateSectionProps {
   formData: any;
   setAndSave: (key: string, value: any) => void;
-  left: { text: string; tone: BadgeTone };
   apiData?: any;
 }
 
@@ -32,36 +32,21 @@ export default function DateSection({ formData, setAndSave, apiData }: DateSecti
     }
   };
 
-  const formatDateString = (date: Date | null): string => {
-    if (!date || isNaN(date.getTime())) return '';
-    try {
-      return date.toISOString().split('T')[0];
-    } catch {
-      return '';
-    }
+  const formatDate = (date: Date | null): string => {
+    return date ? date.toISOString().split('T')[0] : '';
   };
 
-  const parseTodays = (periodStr: string): number => {
-    const { period } = parseExpire(periodStr);
-    if (period === "정보 없음") return 0;
-
-    const yearMatch = period.match(/(\d+)년/);
-    const monthMatch = period.match(/(\d+)개월/);
-    const dayMatch = period.match(/(\d+)일/);
-
-    if (yearMatch) return parseInt(yearMatch[1]) * 365;
-    if (monthMatch) {
-      const months = parseInt(monthMatch[1]);
-      return months === 12 ? 365 : months * 30;
+  const updateEndDate = (days: number) => {
+    if (formData.buyDate) {
+      const endDate = calculateEndDate(formData.buyDate, days);
+      setAndSave("endDate", endDate);
     }
-    if (dayMatch) return parseInt(dayMatch[1]);
-    return 0;
   };
 
   useEffect(() => {
     if (typeof formData.expirePeriod === 'string') {
-      const days = parseTodays(formData.expirePeriod);
-      setAndSave("expirePeriod", days);
+      const { days } = parseExpire(formData.expirePeriod);
+      setAndSave("expirePeriod", days || 0);
     }
   }, [formData.expirePeriod]);
 
@@ -69,8 +54,8 @@ export default function DateSection({ formData, setAndSave, apiData }: DateSecti
     if (apiData && (!formData.expirePeriod || formData.expirePeriod === 0)) {
       const apiText = apiData?.POG_DAYCNT || '';
       if (apiText) {
-        const days = parseTodays(apiText);
-        if (days > 0) setAndSave("expirePeriod", days);
+        const { days } = parseExpire(apiText);
+        if (days && days > 0) setAndSave("expirePeriod", days);
       }
     }
   }, [apiData, formData.expirePeriod]);
@@ -78,7 +63,7 @@ export default function DateSection({ formData, setAndSave, apiData }: DateSecti
   const getPeriodValue = (): { value: number; unit: PeriodUnit } => {
     const period = formData.expirePeriod || 7;
     
-    if (period === 365 || (period >= 365 && period % 365 === 0)) {
+    if (period >= 365 && period % 365 === 0) {
       return { value: period / 365, unit: 'year' };
     }
     if (period >= 30 && period % 30 === 0) {
@@ -89,47 +74,38 @@ export default function DateSection({ formData, setAndSave, apiData }: DateSecti
 
   const currentPeriod = getPeriodValue();
 
+  const convertToDays = (value: number, unit: PeriodUnit): number => {
+    if (unit === 'month') return value * 30;
+    if (unit === 'year') return value * 365;
+    return value;
+  };
+
   const handlePeriodValueChange = (value: string) => {
     const numValue = parseInt(value, 10) || 1;
-    let days = numValue;
-    if (currentPeriod.unit === 'month') days = numValue * 30;
-    else if (currentPeriod.unit === 'year') days = numValue * 365;
+    const days = convertToDays(numValue, currentPeriod.unit);
     
     setAndSave("expirePeriod", days);
-    
-    if (formData.buyDate) {
-      const buyDate = new Date(formData.buyDate);
-      const endDate = addDays(buyDate, days);
-      setAndSave("endDate", formatDateString(endDate));
-    }
+    updateEndDate(days);
   };
 
   const handlePeriodUnitChange = (unit: PeriodUnit) => {
-    let days = currentPeriod.value;
-    if (unit === 'month') days = currentPeriod.value * 30;
-    else if (unit === 'year') days = currentPeriod.value * 365;
+    const days = convertToDays(currentPeriod.value, unit);
     
     setAndSave("expirePeriod", days);
-    
-    if (formData.buyDate) {
-      const buyDate = new Date(formData.buyDate);
-      const endDate = addDays(buyDate, days);
-      setAndSave("endDate", formatDateString(endDate));
-    }
+    updateEndDate(days);
   };
 
   const handleBuyDateChange = (date: Date | null) => {
-    const dateStr = formatDateString(date);
+    const dateStr = formatDate(date);
     setAndSave("buyDate", dateStr);
     
     if (dateStr && formData.expirePeriod) {
-      const endDate = addDays(date!, formData.expirePeriod);
-      setAndSave("endDate", formatDateString(endDate));
+      updateEndDate(formData.expirePeriod);
     }
   };
 
   const handleEndDateChange = (date: Date | null) => {
-    setAndSave("endDate", formatDateString(date));
+    setAndSave("endDate", formatDate(date));
   };
 
   return (

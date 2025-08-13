@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react";
 import "./Input.css";
+import edit from "../../../assets/edit.png";
 
 interface InputProps {
   value?: string | number;
   onSave: (value: string) => void;
   type?: 'text' | 'number';
-  placeholder?: string;
   className?: string;
   showEditIcon?: boolean;
 }
@@ -20,14 +20,16 @@ export default function Input({
   showEditIcon = true
 }: InputProps) {
   const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState(String(value ?? ''));
+  const [draft, setDraft] = useState('');
+
+  const stringValue = String(value ?? '');
 
   useEffect(() => {
-    setDraft(String(value ?? ''));
-  }, [value]);
+    setDraft(stringValue);
+  }, [stringValue]);
 
   const handleEdit = () => {
-    setDraft(String(value ?? ''));
+    setDraft(stringValue);
     setEditing(true);
   };
 
@@ -35,6 +37,7 @@ export default function Input({
     onSave(draft);
     setEditing(false);
   };
+
 
   if (editing) { 
     return (
@@ -44,6 +47,7 @@ export default function Input({
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           onBlur={handleSave}
+          autoFocus
         />
       </div>
     );
@@ -53,20 +57,20 @@ export default function Input({
     <div className="input-container">
       {showEditIcon ? (
         <>
-          <span className={`fd-text ${className}`}>{value ?? ''}</span>
+          <span className={`fd-text ${className}`}>{stringValue}</span>
           <button
             className="edit-btn"
             onClick={handleEdit}
             type="button"
           >
-            ✎
+            <img src={edit} alt="edit" className="edit-icon" />
           </button>
         </>
       ) : (
         <input
           type={type}
           className={`fd-input ${className}`}
-          value={value ?? ''}
+          value={stringValue}
           onChange={(e) => onSave(e.target.value)} 
         />
       )}

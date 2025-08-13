@@ -5,20 +5,39 @@ interface QuantityInfo {
 }
 
 export function parseQuantity(productName: string): QuantityInfo {
-    if (!productName) return { quantity: 1, unit: "개" };
+if (!productName) {
+        return { quantity: 1, unit: "개" };
+    }
+    
     const patterns: { regex: RegExp; unit: string }[] = [
-        { regex: /([0-9]+(?:\.[0-9]+)?)\s*개입/i, unit: "개입" },
-        { regex: /([0-9]+(?:\.[0-9]+)?)\s*개/i, unit: "개" },
-        { regex: /([0-9]+(?:\.[0-9]+)?)\s*kg/i, unit: "kg" },
-        { regex: /([0-9]+(?:\.[0-9]+)?)\s*g/i, unit: "g" },
-        { regex: /([0-9]+(?:\.[0-9]+)?)\s*ml/i, unit: "ml" },
-        { regex: /([0-9]+(?:\.[0-9]+)?)\s*l/i, unit: "L" },
+        { regex: /(\d+(?:\.\d+)?)\s*개입/i, unit: "개입" },
+        { regex: /(\d+(?:\.\d+)?)\s*개/i, unit: "개" },
+        { regex: /(\d+(?:\.\d+)?)\s*kg/i, unit: "kg" },
+        { regex: /(\d+(?:\.\d+)?)\s*g/i, unit: "g" },
+        { regex: /(\d+(?:\.\d+)?)\s*ml/i, unit: "ml" },
+        { regex: /(\d+(?:\.\d+)?)\s*L/i, unit: "L" },
+        { regex: /(\d+(?:\.\d+)?)\s*봉지/i, unit: "봉지" },
+        { regex: /(\d+(?:\.\d+)?)\s*병/i, unit: "병" },
+        { regex: /(\d+(?:\.\d+)?)\s*캔/i, unit: "캔" },
     ];
-    for (const { regex, unit } of patterns) {
+    
+    for (let i = 0; i < patterns.length; i++) {
+        const { regex, unit } = patterns[i];
+        
         const match = productName.match(regex);
+        
         if (match) {
-            return { quantity: parseFloat(match[1]), unit };
+            let result;
+            if (regex.source.includes('EA')) {
+                result = { quantity: parseInt(match[2]), unit };
+            } else {
+                result = { quantity: parseFloat(match[1]), unit };
+            }
+            
+            return result;
         }
     }
-    return { quantity: 1, unit: "개" };
+    const defaultResult = { quantity: 1, unit: "개" };
+    
+    return defaultResult;
 }

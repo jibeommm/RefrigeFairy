@@ -1,17 +1,13 @@
 // src/pages/StoragePage/helpers.ts
 import { calculateDDay } from '../../utils/calculateDDay';
-import type { ExpirySettings } from '../../hooks/useSettings';
 import type { BadgeTone } from '../../components/DBadge/DBadge';
 import type { Food } from '../../types/food';
+import type { AppSettings } from '../../hooks/useSettings';
 
 export type FilterTab = "모두" | "냉동실" | "냉장실" | "실온";
 
-export function dBadge(endDate: string, settings?: ExpirySettings) {
-  const { label, color } = calculateDDay(endDate, settings ?? {
-    warningDays: 7,
-    dangerDays: 3,
-    enableNotifications: false
-  });
+export function dBadge(endDate: string, settings: AppSettings) {
+  const { label, color } = calculateDDay(endDate, settings);
 
   let text = label;
   if (label.startsWith('D-') && label !== 'D-Day') {
@@ -20,11 +16,10 @@ export function dBadge(endDate: string, settings?: ExpirySettings) {
     text = '오늘';
   }
 
-  const colorToTone: Record<"red" | "orange" | "white" | "gray" | "black", BadgeTone> = {
+  const colorToTone: Record<"red" | "orange" | "white" | "black", BadgeTone> = {
     red: "danger",
     orange: "warning",
     white: "ok",
-    gray: "neutral",
     black: "dark"
   };
 
