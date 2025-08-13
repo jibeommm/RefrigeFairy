@@ -42,7 +42,9 @@ function RegisterFoodContent() {
         {foodInfo && (
           <div className="food-info">
             <FoodDetail food={foodInfo} />
-            <button onClick={handleRegister}>등록</button>
+            <div className="refister-btn">
+              <button onClick={handleRegister}>등록</button>
+            </div>
           </div>
         )}
       </div>

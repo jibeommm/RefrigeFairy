@@ -8,9 +8,13 @@
     color: white !important;
     font-size: 24px;
     font-weight: 700;
-    width: 150px;
+    width: 180px;
     outline: none;
     text-align: center !important;
+}
+
+.react-datepicker__close-icon {
+    display: none !important;
 }
 
 .react-datepicker__input-container input::placeholder {

@@ -1,5 +1,4 @@
 // src/components/FoodDetail/hooks/useFoodForm.ts
-
 import { useState, useEffect, useMemo } from "react";
 import { useFoodStore } from "../../../stores/foodStore";
 import { parseExpire } from "../../../utils/parseExpire";
@@ -53,7 +52,7 @@ export function useFoodForm(food: Food) {
   }, [formData.buyDate, formData.expirePeriod, food.endDate, food.id, updateFood]);
 
   const left = useMemo(() => {
-    return dBadge(formData.endDate ?? "", settings); 
+    return dBadge(formData.endDate ?? "", settings);
   }, [formData.endDate, settings]);
 
   const setAndSave = <K extends keyof Food>(key: K, value: Food[K]) => {

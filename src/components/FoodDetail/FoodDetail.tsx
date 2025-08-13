@@ -1,11 +1,11 @@
 // /src/components/FoodDetail/FoodDetail.tsx
-
 import CategorySection from './components/CategorySection';
 import DateSection from './components/DateSection';
 import QuantitySection from './components/QuantitySection';
 import Input from './components/Input';
 import StorageSelect from './components/StorageSelect';
 import { useFoodForm } from "./hooks/useFoodForm";
+import { useBarcodeQuery } from "../../hooks/useBarcodeQuery";
 import { DEFAULT_STORAGE } from "../../utils/constants";
 import type { Food } from "../../types/food";
 
@@ -22,6 +22,7 @@ export default function FoodDetail({ food }: { food: Food }) {
     setAndSave
   } = useFoodForm(food);
 
+  const { data: barcodeData } = useBarcodeQuery(food.barCode || '');
 
   const handleSetAndSave = (key: string, value: any) => {
     setAndSave(key as keyof Food, value);
@@ -61,11 +62,16 @@ export default function FoodDetail({ food }: { food: Food }) {
         />
       </div>
 
-      <DateSection formData={formData} setAndSave={handleSetAndSave} left={left} />
+      <DateSection 
+        formData={formData} 
+        setAndSave={handleSetAndSave} 
+        left={left} 
+        apiData={barcodeData as any}
+      />
 
       <div className="fd-row">
         <span className="fd-label">현재 수량 / 남은 수량 (단위)</span>    
-          <QuantitySection formData={formData} setAndSave={handleSetAndSave} />
+        <QuantitySection formData={formData} setAndSave={handleSetAndSave} />
       </div>
     </div>
   );
