@@ -2,6 +2,7 @@
 import { useState } from "react";
 import "../css/BarcodeInput.css";
 import { useNavigate } from "react-router-dom";
+import input_green from "../assets/input-green.png"
 
 interface BarcodeInputProps {
   variant?: "app" | "header";
@@ -28,7 +29,7 @@ export default function BarcodeInput({ variant = "app" }: BarcodeInputProps) {
       />
       <div className="actions">
         <button type="button" className="icon-btn search" onClick={handleSearch} title="검색">
-          <span className="icon-placeholder">🔍</span>
+          <img src={input_green} alt="검색" className="search-icon" />
         </button>
       </div>
     </div>

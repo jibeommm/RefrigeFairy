@@ -9,10 +9,23 @@
 }
 
 .logo-section {
+  display: flex;
   font-size: 48px;
   font-weight: 900;
   color: var(--deep);
   text-decoration: none;
+}
+
+.brand-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 16px;
+}
+
+.brand-logo {
+  width: 40px;
+  height: auto;
+  margin-right: 16px;
 }
 
 .icon-section {

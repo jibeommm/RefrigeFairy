@@ -6,6 +6,7 @@ import "../css/Header.css";
 import BarcodeInput from "./BarcodeInput";
 import SettingsPopover from "./SettingsPopover";
 import NotificationsPopover from "./NotificationsPopover";
+import logo from "../assets/logo.png";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ export default function Header() {
   return (
     <div className="header-container">
       <div className="logo-section" onClick={() => navigate("/")}>
-        냉장고를 부탁해
+        <img src={logo} alt="RefrigeFairy Logo" className="brand-logo" />
+        <div>냉장고를 부탁해</div>
       </div>
       <BarcodeInput variant="header" />
       <div className="icon-section">

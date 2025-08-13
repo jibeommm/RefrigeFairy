@@ -18,7 +18,6 @@
   overflow: hidden;
 }
 
-
 .quantity-ring.ok .CircularProgressbar-path {
   stroke: var(--deep);
 }

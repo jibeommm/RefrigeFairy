@@ -93,14 +93,12 @@
   font-weight: bold;
 }
 
-/* 알림 없음 */
 .notifications-empty {
   text-align: center;
   padding: 16px 0;
   color: rgba(255,255,255,0.7);
 }
 
-/* 알림 아이콘 */
 .notification-icon {
   cursor: pointer;
   position: relative;
@@ -108,12 +106,12 @@
 }
 
 .notification-badge {
-  position: absolute;
-  top: -4px;
-  right: -6px;
+  position: relative;
+  top: 10px;
+  right: -50px;
   background: red;
   color: white;
-  border-radius: 50%;
+  border-radius: 16px;
   font-size: 12px;
   font-weight: 600;
   padding: 2px 6px;

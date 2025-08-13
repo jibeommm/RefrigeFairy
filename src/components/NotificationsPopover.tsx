@@ -88,10 +88,10 @@ export default function NotificationsPopover() {
       }
     >
       <div onClick={() => setIsOpen(!isOpen)} className="notification-icon">
-        🔔
         {totalAlerts > 0 && (
           <span className="notification-badge">{totalAlerts}</span>
         )}
+      🔔
       </div>
     </Popover>
   );
