@@ -5,7 +5,7 @@ import { ko } from 'date-fns/locale';
 import Input from "./Input";
 import PeriodUnitSelect, { type PeriodUnit } from "./PeriodUnitSelect";
 import DBadge, { type BadgeTone } from '../../DBadge/DBadge';
-import { useExpirySettings } from '../../../hooks/useExpirySettings';
+import { useSettings } from '../../../hooks/useSettings';
 import { dBadge } from '../../../pages/StoragePage/helpers';
 import "../datepickerStyles.css";
 
@@ -16,7 +16,7 @@ interface DateSectionProps {
 }
 
 export default function DateSection({ formData, setAndSave }: DateSectionProps) {
-  const settings = useExpirySettings();          
+  const settings = useSettings();          
   const badge = dBadge(formData.endDate, settings);  
 
   const getPeriodValue = (): { value: number; unit: PeriodUnit } => {

@@ -1,0 +1,12 @@
+/* src/pages/ProductDetailPage/ProductDetailPage.css */
+product-detail-page {
+  width: 100%;
+  width: 1024px;
+  margin: 0 auto;
+}
+
+.buttons {
+    padding: 20px 20px;
+    display: flex;
+    justify-content: center;    
+}

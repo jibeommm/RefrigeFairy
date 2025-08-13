@@ -1,40 +1,13 @@
 /* /src/css/App.css */
+:root {
+  --green: #6d9660;
+  --mint: #bedeb8;
+  --deep: #4e6c45;
+}
 
 body {
-  background-color: #cde5c0;
+  background: #cde5c0;
   display: flex;
   justify-content: center;
+  margin: 50px 0 50px;
 }
-
-.app-container {
-  width: 60vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 5vw;
-}
-
-.app-title {
-  font-size: 7vw;
-  font-weight: 1000;
-  color: #6d9660;
-  text-align: center;
-}
-
-.content-section {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5vw;
-  color: white;
-}
-
-.content-section div {
-  width: 25vw;
-  height: 25vw;
-  background-color: #6d9660;
-  border-radius: 20px;
-  font-size: 4vw;
-  font-weight: 700;
-  padding: 2vw;
-}
-

@@ -12,7 +12,9 @@ export default function BarcodeInput({ variant = "app" }: BarcodeInputProps) {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    navigate(`/register?barcode=${barcode}`);
+    const trimmed = barcode.trim();
+    if (!trimmed) return; 
+    navigate(`/register?barcode=${trimmed}`);
   };
 
   return (
@@ -22,10 +24,13 @@ export default function BarcodeInput({ variant = "app" }: BarcodeInputProps) {
         placeholder="바코드를 입력해줘!"
         value={barcode}
         onChange={(e) => setBarcode(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
-      <button type="button" onClick={handleSearch}>
-        검색
-      </button>
+      <div className="actions">
+        <button type="button" className="icon-btn search" onClick={handleSearch} title="검색">
+          <span className="icon-placeholder">🔍</span>
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,14 @@
 // /src/App.tsx
+
 import { Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import RegisterFood from "./pages/RegisterFood/RegisterFood";
 import StoragePage from "./pages/StoragePage/StoragePage";
-import ProductDetailPage from "./pages/ProductDetailPage";
+import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
+import NotificationsPage from "./pages/NotificationsPage/NotificationsPage";
+import "./css/App.css";
+import "./css/qty.css";
+
 
 export default function App() {
   return (
@@ -12,6 +17,7 @@ export default function App() {
       <Route path="/register" element={<RegisterFood />} />
       <Route path="/storage" element={<StoragePage />} />
       <Route path="/detail" element={<ProductDetailPage />} />
+      <Route path="/notifications" element={<NotificationsPage />} />
     </Routes>
   );
 }

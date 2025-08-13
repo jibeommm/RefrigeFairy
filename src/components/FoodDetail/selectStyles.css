@@ -12,7 +12,7 @@
 }
 
 .react-select__control {
-  border-radius: 4px;
+  border-radius: 50px !important;
   padding: 4px;
   min-height: 40px;
   box-shadow: none;

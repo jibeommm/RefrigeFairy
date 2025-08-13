@@ -1,45 +1,33 @@
-// /src/pages/RegisterFood.tsx
-import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { fetchBarcode } from "../../api/fetchBarcode";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFoodStore } from "../../stores/foodStore";
 import type { Food } from "../../types/food";
 import "./RegisterFood.css";
 import Header from "../../components/Header";
-import FoodDetail from "../../components/FoodDetail";
+import FoodDetail from "../../components/FoodDetail/FoodDetail";
+import { useBarcodeQuery } from "../../hooks/useBarcodeQuery";
 
-export default function RegisterFood() {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60,
+    },
+  },
+});
+
+function RegisterFoodContent() {
   const [searchParams] = useSearchParams();
-  const barcode = searchParams.get("barcode") || "";
+  const barcode = (searchParams.get("barcode") || "").trim();
   const navigate = useNavigate();
 
-  const { addFood, foods } = useFoodStore(); 
-  const [foodInfo, setFoodInfo] = useState<Food | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    if (barcode) {
-      setFoodInfo(null);
-      (async () => {
-        try {
-          setLoading(true);
-          setError("");
-          const result = await fetchBarcode(barcode);
-          setFoodInfo(result);
-        } catch (err: any) {
-          setError(err.message || "조회 실패");
-          setFoodInfo(null);
-        } finally {
-          setLoading(false);
-        }
-      })();
-    }
-  }, [barcode]);
+  const { addFood, foods } = useFoodStore();
+  const { data: foodInfo, isLoading: loading, error } = useBarcodeQuery(barcode);
 
   const handleRegister = () => {
     if (!foodInfo) return;
-    const latestFood = foods.find((f) => f.id === foodInfo.id) || foodInfo;
+    const latestFood: Food = foods.find((f) => f.id === foodInfo.id) || foodInfo;
     addFood(latestFood);
     navigate("/storage");
   };
@@ -49,7 +37,7 @@ export default function RegisterFood() {
       <Header />
       <div className="register-container">
         {loading && <div>조회 중...</div>}
-        {error && <div className="error">{error}</div>}
+        {error && <div className="error">{(error as any)?.message ?? "조회 실패"}</div>}
 
         {foodInfo && (
           <div className="food-info">
@@ -59,5 +47,13 @@ export default function RegisterFood() {
         )}
       </div>
     </>
+  );
+}
+
+export default function RegisterFood() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RegisterFoodContent />
+    </QueryClientProvider>
   );
 }

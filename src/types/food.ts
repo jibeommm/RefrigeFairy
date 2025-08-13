@@ -1,5 +1,8 @@
+// /src/types/food.ts
+export type StorageType = "냉장" | "냉동" | "실온" | "정보 없음";
+
 export type Food = {
-  id: string;
+  id: string;          
   reportNo: string;
   reportDate: string;
   endDate: string;
@@ -20,10 +23,13 @@ export type Food = {
   midCategory: string;
   bigCategory: string;
 
-  quantity?: number;        
-  originalQuantity?: number;   
-  unit?: string;          
-  buyDate?: string;     
-  storageType?: string;    
-  expirePeriod?: string;     
+  quantity?: number;
+  originalQuantity?: number;
+  unit?: string;
+  buyDate?: string;
+
+  storageType?: StorageType;  
+  expirePeriod?: string;
+
+  updatedAt?: number;      
 };

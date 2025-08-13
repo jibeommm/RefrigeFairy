@@ -1,4 +1,5 @@
 // src/pages/StoragePage/StoragePage.tsx
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
@@ -8,9 +9,15 @@ import ItemCard from "./components/ItemCard";
 import type { FilterTab } from "./helpers";
 import { useFilteredFoods } from "./hooks/useFilteredFoods";
 
+import type { Food } from "../../types/food";
+import { useSettings } from "../../hooks/useSettings";
+import { dBadge } from "./helpers";
+
 export default function StoragePage() {
   const { foods, updateFood } = useFoodStore();
   const navigate = useNavigate();
+
+  const settings = useSettings();
 
   const [filter, setFilter] = useState<FilterTab>("모두");
   const [search, setSearch] = useState("");
@@ -19,6 +26,7 @@ export default function StoragePage() {
 
   const onMinus = (id: string, current?: number) =>
     updateFood(id, { quantity: Math.max(0, (current ?? 0) - 1) });
+
   const onPlus = (id: string, current?: number) =>
     updateFood(id, { quantity: (current ?? 0) + 1 });
 
@@ -57,32 +65,38 @@ export default function StoragePage() {
           {(["냉동", "냉장", "실온"] as const).map((key) => (
             <section className="column-panel" key={key}>
               <div className="column-list">
-                {grouped[key].map((f) => (
+                {grouped[key].map((f: Food) => (
                   <ItemCard
                     key={f.id}
                     food={f}
                     onClick={() => goDetail(f.barCode)}
                     onMinus={onMinus}
                     onPlus={onPlus}
+                    left={dBadge(f.endDate, settings)}
                   />
                 ))}
-                {grouped[key].length === 0 && <p className="empty">텅! 해당 보관에 상품이 없어요,,,</p>}
+                {grouped[key].length === 0 && (
+                  <p className="empty">텅! 해당 보관에 상품이 없어요,,,</p>
+                )}
               </div>
             </section>
           ))}
         </div>
       ) : (
         <div className="filter-board">
-          {filtered.map((f) => (
+          {filtered.map((f: Food) => ( 
             <ItemCard
               key={f.id}
               food={f}
               onClick={() => goDetail(f.barCode)}
               onMinus={onMinus}
               onPlus={onPlus}
+              left={dBadge(f.endDate, settings)}
             />
           ))}
-          {filtered.length === 0 && <p className="empty">검색 결과가 없습니다.</p>}
+          {filtered.length === 0 && (
+            <p className="empty">검색 결과가 없습니다.</p>
+          )}
         </div>
       )}
     </div>

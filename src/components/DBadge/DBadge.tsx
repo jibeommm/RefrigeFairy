@@ -18,5 +18,4 @@ export default function DBadge({ text, tone, className = "" }: DBadgeProps) {
   );
 }
 
-// 편의를 위한 타입 export
 export type { BadgeTone };

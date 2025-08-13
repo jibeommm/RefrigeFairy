@@ -8,7 +8,7 @@ import { parseQuantity } from "../../../utils/parseQuantity";
 import { UNIT_OPTIONS, toStorageType, DEFAULT_STORAGE } from "../../../utils/constants";
 import type { Food } from "../../../types/food";
 
-import { useExpirySettings } from "../../../hooks/useExpirySettings";
+import { useSettings } from "../../../hooks/useSettings";
 import { dBadge } from "../../../pages/StoragePage/helpers";
 
 export function useFoodForm(food: Food) {
@@ -40,7 +40,7 @@ export function useFoodForm(food: Food) {
 
   const [customUnit, setCustomUnit] = useState(initialIsCustom ? initialUnit ?? "" : "");
 
-  const settings = useExpirySettings();
+  const settings = useSettings();
 
   useEffect(() => {
     if (formData.buyDate && formData.expirePeriod) {

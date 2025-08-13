@@ -1,0 +1,43 @@
+/* /src/css/FoodDetail.css */
+
+
+.fd-card{
+  background: var(--green);
+  border-radius: 22px;
+  padding: 28px 32px 30px;
+  color: #fff;
+}
+
+
+.fd-row {
+  display: flex; 
+  align-items: center; 
+  margin: 12px 0;
+  gap: 30px;
+  height: 60px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  padding: 0;
+}
+
+
+.fd-row--qty {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.custom-datepicker {
+  background: #fff !important;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,.2) !important;
+}
+
+
+.period-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

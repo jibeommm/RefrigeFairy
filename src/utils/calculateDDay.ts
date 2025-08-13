@@ -1,6 +1,6 @@
 // src/utils/calculateDDay.ts
 
-import type { ExpirySettings } from '../hooks/useExpirySettings';
+import type { ExpirySettings } from '../hooks/useSettings';
 
 type ColorType = "red" | "orange" | "white" | "gray" | "black";
 
