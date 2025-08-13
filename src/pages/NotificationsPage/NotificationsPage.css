@@ -1,0 +1,117 @@
+/* 알림 페이지 전체 레이아웃 — 스토리지 페이지와 동일 */
+.notifications-page {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.notifications-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0 18px;
+}
+
+/* 필터 버튼 */
+.pill {
+  min-width: 120px; /* 알림 페이지는 라벨이 길어서 조금 넓게 */
+  padding: 10px 16px;
+  border: none;
+  border-radius: 28px;
+  background: #e9f2e6;
+  color: var(--green);
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.06) inset;
+}
+.pill.active {
+  background: var(--green);
+  color: #fff;
+}
+
+/* 공통 아이템 카드 영역 */
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.item-left { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
+  gap: 4px;
+}
+
+.item-card {
+  padding: 22px;
+  border-radius: 18px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.item-name {
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.item-manufacturer {
+  font-size: 20px;
+  font-weight: 500;
+  color: #ccc;
+}
+
+.item-right { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-end; 
+  gap: 10px;
+}
+
+.item-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 경고/위험 표시 칩 */
+.chip {
+  background: #e9f2e6;
+  color: #2d4f2b;
+  border-radius: 18px;
+  padding: 6px 12px;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* 카테고리 별 컬럼 */
+.column-panel {
+  background: #6f9365;
+  border-radius: 18px;
+  width: 500px;
+  box-shadow: 0 16px 30px rgba(0,0,0,.10);
+}
+
+.column-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 필터 적용된 보드 */
+.filter-board {
+  background-color: var(--green);
+  border-radius: 18px;
+}
+
+/* 빈 상태 */
+.empty {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  padding: 20px;
+}

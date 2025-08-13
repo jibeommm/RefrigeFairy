@@ -24,7 +24,7 @@ export function useNotifications() {
     const { tone } = dBadge(f.endDate, settings);
     const qtyTone = getQtyTone(f);
 
-    if (tone === "danger" || tone === "warning") {
+    if (tone === "danger" || tone === "warning" || tone === "dark") {
       expiryWarnings.push(f);
     }
     if (qtyTone === "danger" || qtyTone === "warning") {
