@@ -4,8 +4,10 @@
   background-color: var(--green);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 400px;
-  overflow-y: auto;
+  width: 320px;
+  padding: 10px;
+  color: white;
+  font-size: 14px;
 }
 
 .settings-popover-header {

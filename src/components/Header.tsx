@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Header.css";
 import BarcodeInput from "./BarcodeInput";
-import SettingsPopover from "./FoodDetail/SettingsPopover";
+import SettingsPopover from "./SettingsPopover";
+import NotificationsPopover from "./NotificationsPopover";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -25,13 +26,13 @@ export default function Header() {
       </div>
       <BarcodeInput variant="header" />
       <div className="icon-section">
-        <div>알림</div>
+        <NotificationsPopover />
         <SettingsPopover 
           isOpen={isSettingsOpen}
           onClose={closeSettings}
         >
           <div onClick={openSettings} style={{ cursor: 'pointer' }}>
-            설정
+            ⚙️
           </div>
         </SettingsPopover>
       </div>

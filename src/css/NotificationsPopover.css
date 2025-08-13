@@ -1,0 +1,120 @@
+/* src/css/NotificationsPopover.css */
+
+.notifications-popover {
+  background-color: var(--green);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 400px;
+  height: 70vh;
+  padding: 16px;
+  color: white;
+  font-size: 14px;
+  overflow-y: auto;
+}
+
+/* 팝오버 타이틀 */
+.notifications-popover h4 {
+  margin: 0 0 16px;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.notifications-popover h2 {
+  margin: 16px 0 8px;
+  font-size: 32px;
+  font-weight: 600;
+  padding-bottom: 4px;
+}
+
+/* 알림 아이템 공통 */
+.notification-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.notification-item:hover {
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+
+.notification-item strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 500;
+  padding-left: 16px;
+}
+
+.quantity-ring {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.quantity-ring .CircularProgressbar-path {
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease 0s;
+}
+
+.quantity-ring.ok .CircularProgressbar-path {
+  stroke: #4caf50;
+}
+
+.quantity-ring.warning .CircularProgressbar-path {
+  stroke: #ff9800;
+}
+
+.quantity-ring.danger .CircularProgressbar-path {
+  stroke: #f44336;
+}
+
+.quantity-ring .CircularProgressbar-trail {
+  stroke: #eee;
+}
+
+.quantity-ring.ok .CircularProgressbar-text {
+  fill: #4caf50;
+}
+
+.quantity-ring.warning .CircularProgressbar-text {
+  fill: #ff9800;
+}
+
+.quantity-ring.danger .CircularProgressbar-text {
+  fill: #f44336;
+}
+
+.quantity-ring .CircularProgressbar-text {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 알림 없음 */
+.notifications-empty {
+  text-align: center;
+  padding: 16px 0;
+  color: rgba(255,255,255,0.7);
+}
+
+/* 알림 아이콘 */
+.notification-icon {
+  cursor: pointer;
+  position: relative;
+  font-size: 36px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+}
