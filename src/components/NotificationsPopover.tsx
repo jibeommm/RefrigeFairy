@@ -1,5 +1,4 @@
 // src/components/NotificationsPopover.tsx
-
 import { Popover } from "react-tiny-popover";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,9 +19,12 @@ export default function NotificationsPopover() {
   const navigate = useNavigate();
 
   const handleItemClick = (food: Food) => {
-    if (!food.barCode) return;
     setIsOpen(false);
-    navigate(`/detail?barcode=${food.barCode}`);
+    if (food.barCode) {
+      navigate(`/detail?barcode=${food.barCode}`);
+    } else {
+      navigate(`/detail?id=${food.id}`);
+    }
   };
 
   return (
@@ -91,7 +93,7 @@ export default function NotificationsPopover() {
         {totalAlerts > 0 && (
           <span className="notification-badge">{totalAlerts}</span>
         )}
-      🔔
+        🔔
       </div>
     </Popover>
   );

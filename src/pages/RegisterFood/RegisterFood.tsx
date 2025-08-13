@@ -36,7 +36,13 @@ function RegisterFoodContent() {
     <>
       <Header />
       <div className="register-container">
-        {loading && <div>조회 중...</div>}
+        {loading && (
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <div className="loading-text"></div>
+            <div className="skeleton skeleton-card"></div>
+          </div>
+        )}
         {error && <div className="error">{(error as any)?.message ?? "조회 실패"}</div>}
 
         {foodInfo && (
