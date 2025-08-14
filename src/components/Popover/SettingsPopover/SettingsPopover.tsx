@@ -1,8 +1,8 @@
-// src/components/FoodDetail/SettingsPopover.tsx
+// src/components/FoodDetail/SettingsPopover/SettingsPopover.tsx
 
 import { useState, useEffect } from 'react';
 import { Popover } from 'react-tiny-popover';
-import "../css/SettingsPopover.css";
+import "./SettingsPopover.css";
 
 interface SettingsPopoverProps {
   isOpen: boolean;
@@ -10,7 +10,7 @@ interface SettingsPopoverProps {
   children: React.ReactNode; 
 }
 
-export default function SettingsPopover({ isOpen, onClose, children }: SettingsPopoverProps) {
+export default function ({ isOpen, onClose, children }: SettingsPopoverProps) {
 
   const [warningDays, setWarningDays] = useState(() => {
     const saved = localStorage.getItem('expiry-warning-days');
@@ -33,24 +33,17 @@ export default function SettingsPopover({ isOpen, onClose, children }: SettingsP
     return saved ? Number(saved) : 10; 
   });
 
-  const [enableNotifications, setEnableNotifications] = useState(() => {
-    const saved = localStorage.getItem('expiry-notifications');
-    return saved !== 'false';
-  });
-
   useEffect(() => {
     if (isOpen) {
       const savedWarning = localStorage.getItem('expiry-warning-days');
       const savedDanger = localStorage.getItem('expiry-danger-days');
       const savedWarningQty = localStorage.getItem('quantity-warning-percent');
       const savedDangerQty = localStorage.getItem('quantity-danger-percent');
-      const savedNotifications = localStorage.getItem('expiry-notifications');
 
       if (savedWarning) setWarningDays(Number(savedWarning));
       if (savedDanger) setDangerDays(Number(savedDanger));
       if (savedWarningQty) setWarningQty(Number(savedWarningQty));
       if (savedDangerQty) setDangerQty(Number(savedDangerQty));
-      if (savedNotifications !== null) setEnableNotifications(savedNotifications !== 'false');
     }
   }, [isOpen]);
 
@@ -65,7 +58,6 @@ export default function SettingsPopover({ isOpen, onClose, children }: SettingsP
       localStorage.setItem('expiry-danger-days', validDangerDays.toString());
       localStorage.setItem('quantity-warning-percent', validWarningQty.toString());
       localStorage.setItem('quantity-danger-percent', validDangerQty.toString());
-      localStorage.setItem('expiry-notifications', enableNotifications.toString());
 
       window.dispatchEvent(new Event('expiry-settings-changed'));
 
@@ -98,34 +90,26 @@ export default function SettingsPopover({ isOpen, onClose, children }: SettingsP
               <h4>유통기한 경고</h4>
               <div className="badge-setting">
                 <div className="badge-demo warning">주의</div>
-                <div className="badge-controls">
-                  <label>
-                    <input
-                      type="number"
-                      min="1"
-                      value={warningDays}
-                      onChange={(e) => setWarningDays(Number(e.target.value))}
-                      className="day-input"
-                    />
-                    <span>일 이하 (노란색)</span>
-                  </label>
-                </div>
+                <input
+                  type="number"
+                  min="1"
+                  value={warningDays}
+                  onChange={(e) => setWarningDays(Number(e.target.value))}
+                  className="day-input"
+                />
+                <div>일 이하 (노란색)</div>
               </div>
 
               <div className="badge-setting">
                 <div className="badge-demo danger">위험</div>
-                <div className="badge-controls">
-                  <label>
-                    <input
-                      type="number"
-                      min="1"
-                      value={dangerDays}
-                      onChange={(e) => setDangerDays(Number(e.target.value))}
-                      className="day-input"
-                    />
-                    <span>일 이하 (빨간색)</span>
-                  </label>
-                </div>
+                <input
+                  type="number"
+                  min="1"
+                  value={dangerDays}
+                  onChange={(e) => setDangerDays(Number(e.target.value))}
+                  className="day-input"
+                />
+                <div>일 이하 (빨간색)</div>
               </div>
             </div>
           </div>
@@ -135,32 +119,24 @@ export default function SettingsPopover({ isOpen, onClose, children }: SettingsP
               <h4>수량 경고</h4>
               <div className="quantity-setting">
                 <div className="quantity-demo warning">주의</div>
-                <div className="quantity-controls">
-                  <label>
-                    <input
-                      type="number"
-                      min="1"
-                      value={warningQty}
-                      onChange={(e) => setWarningQty(Number(e.target.value))}
-                    />
-                    <span>% 이하 (노란색)</span>
-                  </label>
-                </div>
+                <input
+                  type="number"
+                  min="1"
+                  value={warningQty}
+                  onChange={(e) => setWarningQty(Number(e.target.value))}
+                />
+                <div>% 이하 (노란색)</div>
               </div>
 
               <div className="quantity-setting">
                 <div className="quantity-demo danger">위험</div>
-                <div className="quantity-controls">
-                  <label>
-                    <input
-                      type="number"
-                      min="1"
-                      value={dangerQty}
-                      onChange={(e) => setDangerQty(Number(e.target.value))}
-                    />
-                    <span>% 이하 (빨간색)</span>
-                  </label>
-                </div>
+                <input
+                  type="number"
+                  min="1"
+                  value={dangerQty}
+                  onChange={(e) => setDangerQty(Number(e.target.value))}
+                />
+                <div>% 이하 (빨간색)</div>
               </div>
             </div>
           </div>

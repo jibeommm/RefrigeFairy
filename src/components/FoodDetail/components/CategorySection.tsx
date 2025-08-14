@@ -3,7 +3,7 @@
 import React from 'react';
 import type { Food } from "../../../types/food";
 import Select from 'react-select';
-import "../selectStyles.css";
+import "../css/select.css";
 import { BIG_CATEGORIES, MID_CATEGORIES, SMALL_CATEGORIES, type CategoryOption } from "../data/categories";
 
 interface CategorySectionProps {
@@ -57,9 +57,9 @@ export default function CategorySection({ formData, setAndSave, apiData }: Categ
   }, [formData.bigCategory, formData.midCategory]);
 
   return (
-    <div className="fd-row">
-      <span className="fd-label">분류</span>
-      <div className="fd-category-group">
+    <div className="foodDetailrow">
+      <span className="foodDetaillabel">분류</span>
+      <div className="foodDetailcategory-group">
         <Select
           value={createValue(formData.bigCategory)}
           onChange={(option) => handleCategoryChange('big', option)}

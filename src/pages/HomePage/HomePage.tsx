@@ -1,7 +1,7 @@
 // src/pages/HomePage/HomePage.tsx
 
 import { useNavigate } from "react-router-dom";
-import BarcodeInput from "../../components/BarcodeInput";
+import BarcodeInput from "../../components/BarcodeInput/BarcodeInput";
 import { useNotifications } from "../../hooks/useNotifications";
 import logo from "../../assets/logo.png";
 import refrige from "../../assets/refrige.png";
@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <div className="homepage-container">
       <header className="brand-section">
-        <img src={logo} alt="RefrigeFairy Logo" className="brand-logo" />
+        <img src={logo} alt="RefrigeFairy Logo" className="hompage-brand-logo" />
         <h1 className="brand-title">냉장고를 부탁해~</h1>
       </header>
 

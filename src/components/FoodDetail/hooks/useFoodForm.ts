@@ -1,16 +1,23 @@
-// /src/components/FoodDetail/hooks/useFoodForm.ts
+// src/components/FoodDetail/hooks/useFoodForm.ts
+
 import { useState, useEffect } from "react";
 import { useFoodStore } from "../../../stores/foodStore";
-import { parseExpire } from "../../../utils/parseExpire";
 import { calculateEndDate } from "../../../utils/calculateEndDate";
 import { DEFAULT_STORAGE, toStorageType } from "../../../utils/constants";
 import { parseQuantity } from "../../../utils/parseQuantity";
 import type { Food } from "../../../types/food";
 
-export function useFoodForm(food: Food) {
+interface UseFoodFormArgs {
+  food: Food;
+  parsedExpire?: { storage: string; period: string; days?: number };
+}
+
+export function useFoodForm({ food, parsedExpire }: UseFoodFormArgs) {
   const { updateFood } = useFoodStore();
-  const { storage, period } = parseExpire(food.expireDays);
   const today = new Date().toISOString().split("T")[0];
+
+  const expireDays = parsedExpire?.days ?? 7;
+  const storageFromExpire = parsedExpire?.storage ?? "정보 없음";
 
   const smartDefaults = parseQuantity(food.productName || "");
 
@@ -23,10 +30,10 @@ export function useFoodForm(food: Food) {
     midCategory: food.midCategory,
     smallCategory: food.smallCategory,
     expireDays: food.expireDays,
-    storageType: food.storageType || toStorageType(storage) || DEFAULT_STORAGE,
-    expirePeriod: food.expirePeriod || period,
+    storageType: food.storageType || toStorageType(storageFromExpire) || DEFAULT_STORAGE,
+    expirePeriod: food.expirePeriod ?? String(expireDays),
     buyDate: food.buyDate || today,
-    endDate: food.endDate || calculateEndDate(food.buyDate || today, food.expirePeriod || period),
+    endDate: food.endDate || calculateEndDate(food.buyDate || today, food.expirePeriod ?? expireDays),
     quantity: food.quantity ?? smartDefaults.quantity,
     originalQuantity: food.originalQuantity ?? smartDefaults.quantity,
     unit: food.unit ?? smartDefaults.unit,

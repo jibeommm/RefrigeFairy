@@ -1,22 +1,26 @@
-/* src/components/QtyControl.tsx */
-.qty-value{
-  flex:1; text-align:center; color:#fff;
-  font-size:22px; font-weight:900;
+/* src/components/QuantityControl.css */
+
+.quantity-value {
+  flex: 1;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
 
-.qty-pill{
+.quantityControl {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
-  min-width: 120px;  
+  min-width: 120px;
   height: 45px;
   background: var(--deep);
   border-radius: 10px;
 }
 
-.qty-ghost{
+.quantityControl-ghost {
   width: 36px;
   height: 32px;
   margin-right: 0;
@@ -29,7 +33,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background .08s ease, transform .06s ease;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  transition: background 0.08s ease, transform 0.06s ease;
 }
-.qty-ghost:hover { background: rgba(255,255,255,.08); }
+
+.quantityControl-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}

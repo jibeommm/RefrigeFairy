@@ -1,13 +1,13 @@
 /* /src/components/FoodDetail/selectStyles.css */
 
-.fd-category-group {
+.foodDetailcategory-group {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
   align-items: flex-start;
 }
 
-.fd-category-group .react-select-container {
+.foodDetailcategory-group .react-select-container {
   min-width: 200px;
 }
 

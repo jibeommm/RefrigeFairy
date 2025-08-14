@@ -1,23 +1,32 @@
-// src/utils/calculateDDay.ts
+// src/utils/expiryUtils/expiryUtils.ts
+import type { Food } from "../../types/food";
 
-// Define ExpirySettings type here if not exported from useSettings
-type ExpirySettings = {
+export type BadgeTone = "ok" | "warning" | "danger" | "dark";
+
+type ColorType = "red" | "orange" | "white" | "black";
+
+const COLOR_TO_TONE: Record<ColorType, BadgeTone> = {
+  red: "danger",
+  orange: "warning",
+  white: "ok",
+  black: "dark",
+};
+
+export type ExpirySettings = {
   warningDays: number;
   dangerDays: number;
 };
 
-type ColorType = "red" | "orange" | "white" | "black";
-
-export function calculateDDay(
+export function getDDay(
   endDate: string,
   settings: ExpirySettings
 ): { label: string; color: ColorType; days: number } {
   if (!endDate) return { label: "정보 없음", color: "white", days: 0 };
 
   const { warningDays, dangerDays } = settings;
-
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
   const expireDate = new Date(endDate);
   expireDate.setHours(0, 0, 0, 0);
 
@@ -35,3 +44,8 @@ export function calculateDDay(
     return { label: `D+${Math.abs(diffDays)}`, color: "black", days: diffDays };
   }
 }
+
+export const getExpiryTone = (food: Food, settings: ExpirySettings): BadgeTone => {
+  const { color } = getDDay(food.endDate, settings);
+  return COLOR_TO_TONE[color];
+};

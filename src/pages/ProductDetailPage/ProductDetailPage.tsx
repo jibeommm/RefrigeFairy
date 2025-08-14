@@ -2,7 +2,7 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useFoodStore } from "../../stores/foodStore";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header"
 import "./ProductDetailPage.css";
 import "../RegisterFood/RegisterFood.css";
 import FoodDetail from "../../components/FoodDetail/FoodDetail";

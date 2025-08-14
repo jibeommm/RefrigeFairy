@@ -1,8 +1,8 @@
 // /src/components/BarcodeInput.tsx
 import { useState } from "react";
-import "../css/BarcodeInput.css";
+import "./BarcodeInput.css";
 import { useNavigate } from "react-router-dom";
-import input_green from "../assets/input-green.png"
+import input_green from "../../assets/input-green.png";
 
 interface BarcodeInputProps {
   variant?: "app" | "header";

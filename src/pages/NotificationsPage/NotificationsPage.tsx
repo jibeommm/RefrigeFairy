@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
-import { useFoodStore } from "../../stores/foodStore";
-import ItemCard from "../StoragePage/components/ItemCard";
+// src/pages/NotificationsPage/NotificationsPage.tsx
 
+import { useFoodStore } from "../../stores/foodStore";
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header/Header";
+import ItemCard from "../StoragePage/components/ItemCard";
+import type { Food } from "../../types/food";
+import { useNotificationsPage, FILTER_TABS } from "./hooks/useNotificationsPage";
 import { useSettings } from "../../hooks/useSettings";
-import { dBadge } from "../StoragePage/helpers";
-import { getQtyTone, adjustQuantity } from "../../utils/quantityUtils";
+import { getExpiryTone } from "../../utils/expiryUtils/expiryUtils";
+import { getQuantityTone } from "../../utils/quantityUtils/quantityUtils";
 import "./NotificationsPage.css";
 
 export default function NotificationsPage() {
@@ -14,38 +16,23 @@ export default function NotificationsPage() {
   const navigate = useNavigate();
   const settings = useSettings();
 
-  const [filter, setFilter] = useState<"모두" | "유통기한 경고" | "수량 경고">("모두");
-  const [search, setSearch] = useState("");
-
-  const filteredFoods = foods.filter((f) => {
-    const matchesSearch = search === "" || 
-      f.name?.toLowerCase().includes(search.toLowerCase()) ||
-      f.productName?.toLowerCase().includes(search.toLowerCase()) ||
-      f.manufacturer?.toLowerCase().includes(search.toLowerCase());
-
-    if (!matchesSearch) return false;
-    if (filter === "모두") return true;
-
-    if (filter === "유통기한 경고") {
-      const { tone } = dBadge(f.endDate, settings);
+  const { filter, setFilter, search, setSearch, filtered } = useNotificationsPage({
+    foods,
+    isExpiryWarning: (food) => {
+      const tone = getExpiryTone(food, settings.expirySettings);
       return tone === "danger" || tone === "warning" || tone === "dark";
-    }
-
-    if (filter === "수량 경고") {
-      const tone = getQtyTone(f, settings);
+    },
+    isQuantityWarning: (food) => {
+      const tone = getQuantityTone(food, settings.quantitySettings);
       return tone === "danger" || tone === "warning";
-    }
-
-    return true;
+    },
   });
 
-  const onMinus = (id: string, current?: number) =>
-    updateFood(id, { quantity: adjustQuantity(current ?? 0, -1) });
-
-  const onPlus = (id: string, current?: number) =>
-    updateFood(id, { quantity: adjustQuantity(current ?? 0, 1) });
-
   const goDetail = (barCode: string) => navigate(`/detail?barcode=${barCode}`);
+
+  const onChangeQuantity = (id: string, newQty: number) => {
+    updateFood(id, { quantity: newQty });
+  };
 
   return (
     <div className="storage-page">
@@ -53,7 +40,7 @@ export default function NotificationsPage() {
 
       <div className="storage-top">
         <div className="filter-pills">
-          {(["모두", "유통기한 경고", "수량 경고"] as const).map((tab) => (
+          {FILTER_TABS.map((tab) => (
             <button
               key={tab}
               type="button"
@@ -64,6 +51,7 @@ export default function NotificationsPage() {
             </button>
           ))}
         </div>
+
         <div className="search-wrap">
           <input
             type="text"
@@ -75,17 +63,16 @@ export default function NotificationsPage() {
       </div>
 
       <div className="filter-board">
-        {filteredFoods.map((f) => (
-          <ItemCard
-            key={f.id}
-            food={f}
-            onClick={() => goDetail(f.barCode)}
-            onMinus={onMinus}
-            onPlus={onPlus}
-            left={dBadge(f.endDate, settings)}
-          />
-        ))}
-        {filteredFoods.length === 0 && (
+        {filtered.length > 0 ? (
+          filtered.map((f: Food) => (
+            <ItemCard
+              key={f.id ?? f.barCode}
+              food={f}
+              onClick={() => goDetail(f.barCode)}
+              onChangeQuantity={onChangeQuantity}
+            />
+          ))
+        ) : (
           <p className="empty">검색 결과가 없습니다.</p>
         )}
       </div>

@@ -1,24 +1,24 @@
 /* /src/pages/HomPage/HomePage.css */
 
 .homepage-container {
-  width: 1024px;
+  width: 800px;
 }
 
 .brand-section {
   display: flex;
   justify-content: center;
-  margin: 8px 0 8px;
+  align-items: center;
 }
 
-.brand-logo {
-  width: 120px;
-  height: auto;
-  margin-right: 16px;
+.hompage-brand-logo {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
 }
 
 .brand-title {
   margin: 0;
-  font-size: 76px;
+  font-size: 80px;
   font-weight: 900;
   color: var(--deep);
 }
@@ -35,44 +35,39 @@
 }
 
 .feature-card {
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer;
   border: none;
   background: var(--green);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-align: left;
-  border-radius: 22px;
+  border-radius: 20px;
   padding: 32px;
   color: #fff;
-  width: 480px;
-  height: 380px;
+  width: 360px;
+  height: 360px;
   margin: 0;
-  transition: transform .08s ease, box-shadow .08s ease, filter .08s ease;
 }
 
 .card-text {
   font-size: 44px; 
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 .refrige-icon {
-  width: 280px;
+  width: 240px;
   height: auto;
   position: relative;
-  top: -53px;   
-  left: 140px; 
+  top: -38px;   
+  left: 65px; 
 }
 
 .bell-icon {
-width: 280px;
+width: 190px;
 height: auto;
 position: relative;
-top: -160px;
-left: 160px;
+top: -90px;
+left: 120px;
 }
 
 .notification-container {
@@ -80,11 +75,11 @@ left: 160px;
   justify-content: center;
   background: #fff;
   border-radius: 22px;
-  width: 320px;
-  height: 50px;
+  width: 280px;
+  height: 450px;
   margin: 0 auto;
   position: relative;
-  top: 160px;
+  top: 140px;
 
 }
 

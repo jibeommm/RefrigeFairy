@@ -1,10 +1,12 @@
+// src/components/QuantitySection.tsx
+
 import type { Food } from "../../../types/food";
-import Select from 'react-select';
-import QtyControl from '../../QtyControl';
-import Input from './Input';
-import { UNIT_OPTIONS } from '../../../utils/constants';
-import { adjustQuantity, validateQuantity } from '../../../utils/quantityUtils';
-import "../selectStyles.css";
+import Select from "react-select";
+import QtyControl from "../../QuantityControl/QuantityControl";
+import Input from "./Input";
+import { UNIT_OPTIONS } from "../../../utils/constants";
+import { validateQuantity } from "../../../utils/quantityUtils/quantityUtils";
+import "../css/select.css";
 
 interface QuantitySectionProps {
   formData: Partial<Food>;
@@ -12,8 +14,8 @@ interface QuantitySectionProps {
 }
 
 export default function QuantitySection({ formData, setAndSave }: QuantitySectionProps) {
-  const onQty = (delta: number) => {
-    const next = adjustQuantity(formData.quantity ?? 0, delta);
+  const onChangeQuantity = (newValue: number) => {
+    const next = Math.max(0, newValue);
     setAndSave("quantity", next);
   };
 
@@ -27,25 +29,24 @@ export default function QuantitySection({ formData, setAndSave }: QuantitySectio
   };
 
   return (
-    <div className="fd-row fd-row--qty">
+    <div className="foodDetailrow foodDetailrow--quantity">
       <QtyControl
         value={formData.quantity ?? 0}
-        onIncrease={() => onQty(1)}
-        onDecrease={() => onQty(-1)}
+        onChange={onChangeQuantity}
         className="dark"
       />
-      
+
       <span> / </span>
-      
+
       <Input
         type="number"
         value={formData.originalQuantity ?? 10}
-        onSave={(v) => setAndSave("originalQuantity", validateQuantity(v))} 
-        className="qty-input"
+        onSave={(v) => setAndSave("originalQuantity", validateQuantity(v))}
+        className="quantity-input"
       />
-      
+
       <span>(</span>
-      
+
       <Select
         value={getCurrentUnitOption()}
         onChange={handleUnitChange}
@@ -56,7 +57,7 @@ export default function QuantitySection({ formData, setAndSave }: QuantitySectio
         isClearable
         isSearchable={true}
       />
-      
+
       <span>)</span>
     </div>
   );

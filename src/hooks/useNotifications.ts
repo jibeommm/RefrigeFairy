@@ -1,30 +1,42 @@
-// src/hooks/useNotifications.ts
+/* src/hooks/useNotifications.ts */
+import { useMemo } from "react";
 import { useSettings } from "../hooks/useSettings";
 import { useFoodStore } from "../stores/foodStore";
-import { dBadge } from "../pages/StoragePage/helpers";
-import { getQtyTone, getQtyPercent } from "../utils/quantityUtils";
+import { getExpiryTone } from "../utils/expiryUtils/expiryUtils";
+import { getQuantityTone } from "../utils/quantityUtils/quantityUtils";
 import type { Food } from "../types/food";
+import type { ExpirySettings } from "../utils/expiryUtils/expiryUtils";
+import type { QuantitySettings } from "../utils/quantityUtils/quantityUtils";
 
 export function useNotifications() {
   const settings = useSettings();
   const { foods } = useFoodStore();
 
-  const expiryWarnings: Food[] = [];
-  const qtyWarnings: Food[] = [];
+  const { expiryWarnings, quantityWarnings, totalAlerts } = useMemo(() => {
+    const expiryWarnings: Food[] = [];
+    const quantityWarnings: Food[] = [];
 
-  foods.forEach((f) => {
-    const { tone } = dBadge(f.endDate, settings);
-    const qtyTone = getQtyTone(f, settings);
+    const expirySettings: ExpirySettings = settings.expirySettings;
+    const quantitySettings: QuantitySettings = settings.quantitySettings;
 
-    if (tone === "danger" || tone === "warning" || tone === "dark") {
-      expiryWarnings.push(f);
-    }
-    if (qtyTone === "danger" || qtyTone === "warning") {
-      qtyWarnings.push(f);
-    }
-  });
+    foods.forEach((f) => {
+      const expiryTone = getExpiryTone(f, expirySettings);
+      const quantityTone = getQuantityTone(f, quantitySettings);
 
-  const totalAlerts = expiryWarnings.length + qtyWarnings.length;
+      if (expiryTone === "danger" || expiryTone === "warning" || expiryTone === "dark") {
+        expiryWarnings.push(f);
+      }
+      if (quantityTone === "danger" || quantityTone === "warning") {
+        quantityWarnings.push(f);
+      }
+    });
 
-  return { expiryWarnings, qtyWarnings, totalAlerts, getQtyTone, getQtyPercent };
+    return {
+      expiryWarnings,
+      quantityWarnings,
+      totalAlerts: expiryWarnings.length + quantityWarnings.length,
+    };
+  }, [foods, settings.expirySettings, settings.quantitySettings]);
+
+  return { expiryWarnings, quantityWarnings, totalAlerts };
 }

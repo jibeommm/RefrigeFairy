@@ -1,0 +1,108 @@
+/* /src/css/SettingsPopover.css */
+
+.settings-popover-content {
+  background-color: var(--green);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 400px;
+  padding: 16px;
+  color: white;
+  font-size: 14px;
+  overflow-y: auto;
+}
+
+.settings-popover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-popover-header h3 {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  width: 50px;
+  height: 50px;
+  font-size: 32px;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0;
+}
+.close-button:hover {
+  background-color: var(--deep);
+  opacity: 50%;
+}
+
+.settings-section {
+  padding-top: 20px;
+}
+
+.settings-section h4 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+.badge-setting {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  font-size: 24px;
+  font-weight: 500;
+  padding-left: 16px;
+  gap: 5px;
+}
+
+.quantity-setting {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  font-size: 24px;
+  font-weight: 500;
+  padding-left: 16px;
+  gap: 5px;
+}
+
+.settings-popover-content input {
+  width: 60px;
+  height: 12px;
+  padding: 10px;
+  border: none;
+  background-color: var(--deep);
+  color: white;
+  font-size: 24px;
+}
+.settings-popover-content input:focus {
+  outline: none;
+}
+
+.settings-popover-footer {
+  padding: 16px 16px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.save-button {
+  background-color: var(--green);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 32px;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.save-button:hover {
+  background-color: var(--deep);
+  opacity: 50%;
+}

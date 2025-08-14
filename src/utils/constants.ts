@@ -1,7 +1,7 @@
 // /src/utils/constants.ts
 import type { StorageType } from "../types/food";
 
-export const UNIT_VALUES = ["개", "개입", "g", "kg", "ml", "L", "봉지", "병", "캔"] as const;
+export const UNIT_VALUES = ["개", "개입", "g", "kg", "ml", "L", "봉지", "병", "캔"];
 
 export const UNIT_OPTIONS = UNIT_VALUES.map(unit => ({
   value: unit,

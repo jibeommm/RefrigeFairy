@@ -1,0 +1,38 @@
+/* src/components/QPercent/QPercent.css */
+.q-percent-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.q-percent-badge .CircularProgressbar-path {
+  stroke-linecap: butt;
+  transition: stroke-dashoffset 0.5s ease 0s;
+  stroke-width: 30px;
+}
+
+.q-percent-badge .CircularProgressbar-trail {
+  stroke-width: 30px;
+  stroke: #fff;
+}
+
+.q-percent-badge.ok .CircularProgressbar-path {
+  stroke: var(--deep);
+}
+
+.q-percent-badge.warning .CircularProgressbar-path {
+  stroke: #ff9800; 
+}
+
+.q-percent-badge.danger .CircularProgressbar-path {
+  stroke: #f44336; 
+}
+
+.q-percent-badge.dark .CircularProgressbar-path {
+  stroke: #616161;
+}
+
+.q-percent-badge .CircularProgressbar-text {
+  display: none;
+}

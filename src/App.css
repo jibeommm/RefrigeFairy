@@ -1,0 +1,16 @@
+/* /src/App.css */
+:root {
+  --green: #6d9660;
+  --mint: #bedeb8;
+  --deep: #4e6c45;
+  background: #cde5c0;
+  display: flex;
+  justify-content: center;
+  margin: 50px 0 50px;
+}
+
+body {
+  width: 70vw;
+  display: flex;
+  justify-content: center;
+}

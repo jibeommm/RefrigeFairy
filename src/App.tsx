@@ -1,14 +1,11 @@
-// /src/App.tsx
-
+// src/App.tsx
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import RegisterFood from "./pages/RegisterFood/RegisterFood";
 import StoragePage from "./pages/StoragePage/StoragePage";
 import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
 import NotificationsPage from "./pages/NotificationsPage/NotificationsPage";
-import "./css/App.css";
-import "./css/qty.css";
-
+import "./App.css";
 
 export default function App() {
   return (

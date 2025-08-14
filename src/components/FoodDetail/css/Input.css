@@ -1,6 +1,6 @@
 /* /src/components/FoodDetail/components/Input.css */
 
-.fd-input {
+.foodDetailinput {
   border: none; 
   outline: none;
   color: #fff;
@@ -10,7 +10,7 @@
   padding: 0;
 }
 
-.fd-text.title-input {
+.foodDetailtext.title-input {
   font-size: 50px;
   font-weight: 900;
   color: #fff;
@@ -23,18 +23,18 @@
   padding: 0;
 }
 
-.fd-input.qty-input { 
+.foodDetailinput.quantity-input { 
   width: 100px;
   text-align: center;
 }
 
-.fd-input.period-value-input {
+.foodDetailinput.period-value-input {
   min-width: 40px;
   width: auto;
   text-align: center;
 }
 
-.fd-input.custom-unit-input {
+.foodDetailinput.custom-unit-input {
   min-width: 100px;
   width: auto;
   margin-left: 8px;

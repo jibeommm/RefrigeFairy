@@ -58,5 +58,9 @@
   flex:1; border:none; outline:none; background:transparent;
   font-size:16px; font-weight:600; color:#5e6b5e;
 }
-.barcode-input-container.header .actions{ gap:6px; padding-left:8px; border-left:1px solid #eef2ee; }
-.icon-btn.search .icon-placeholder{ font-size:18px; }
+
+.icon-btn.search{
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+}

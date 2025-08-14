@@ -1,20 +1,19 @@
 // src/components/DBadge/DBadge.tsx
-
 import "./DBadge.css";
+import type { Food } from "../../types/food";
+import { getDDay, getExpiryTone } from "../../utils/expiryUtils/expiryUtils";
+import type { BadgeTone, ExpirySettings } from "../../utils/expiryUtils/expiryUtils";
 
-type BadgeTone = 'ok' | 'warning' | 'danger' | 'dark';
+export type { BadgeTone, ExpirySettings };
 
 interface DBadgeProps {
-  text: string;
-  tone: BadgeTone;
+  food: Food;
+  settings: ExpirySettings;
 }
 
-export default function DBadge({ text, tone}: DBadgeProps) {
-  return (
-    <div className={`d-badge ${tone}`}>
-      {text}
-    </div>
-  );
-}
+export default function DBadge({ food, settings }: DBadgeProps) {
+  const dDayInfo = food.endDate ? getDDay(food.endDate, settings) : { label: "정보 없음", color: "white", days: 0 };
+  const expiryTone: BadgeTone = getExpiryTone(food, settings);
 
-export type { BadgeTone };
+  return <div className={`d-badge ${expiryTone}`}>{dDayInfo.label}</div>;
+}

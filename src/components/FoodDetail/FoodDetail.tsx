@@ -1,42 +1,52 @@
-// /src/components/FoodDetail/FoodDetail.tsx
+// src/components/FoodDetail/FoodDetail.tsx
+
+import { useEffect } from "react";
 import CategorySection from './components/CategorySection';
 import DateSection from './components/DateSection';
 import QuantitySection from './components/QuantitySection';
 import Input from './components/Input';
 import StorageSelect from './components/StorageSelect';
 import { useFoodForm } from "./hooks/useFoodForm";
-import { useBarcodeQuery } from "../../hooks/useBarcodeQuery";
 import { DEFAULT_STORAGE } from "../../utils/constants";
 import type { Food } from "../../types/food";
 
-import "./components/Input.css"
-import "./FoodDetail.css";
-import "../../css/qty.css";
-import "react-datepicker/dist/react-datepicker.css";
-import "./selectStyles.css";
+import "./css/Input.css";
+import "./css/FoodDetail.css";
+import "./css/datepicker.css";
 
-export default function FoodDetail({ food }: { food: Food }) {
-  const { formData, setAndSave } = useFoodForm(food);
-  const { data: barcodeData } = useBarcodeQuery(food.barCode || '');
+interface FoodDetailProps {
+  food: Food;
+  barcodeData?: any;
+  onChange?: (food: Food) => void;
+}
+
+export default function FoodDetail({ food, barcodeData, onChange }: FoodDetailProps) {
+  const { formData, setAndSave } = useFoodForm({ food });
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(formData as Food);
+    }
+  }, [formData, onChange]);
 
   return (
-    <div className="fd-card">
+    <div className="foodDetailcard">
       <Input
         value={formData.name ?? ""}
         onSave={(newValue) => setAndSave("name" as keyof Food, newValue)}
         className="title-input"
       />
 
-      <div className="fd-row">
-        <span className="fd-label">상품명</span>
+      <div className="foodDetailrow">
+        <span className="foodDetaillabel">상품명</span>
         <Input
           value={formData.productName ?? "정보 없음"}
           onSave={(newValue) => setAndSave("productName" as keyof Food, newValue)}
         />
       </div>
 
-      <div className="fd-row">
-        <span className="fd-label">판매처</span>
+      <div className="foodDetailrow">
+        <span className="foodDetaillabel">판매처</span>
         <Input
           value={formData.manufacturer ?? formData.cmpnyName ?? "정보 없음"}
           onSave={(newValue) => setAndSave("manufacturer" as keyof Food, newValue)}
@@ -45,22 +55,23 @@ export default function FoodDetail({ food }: { food: Food }) {
 
       <CategorySection formData={formData} setAndSave={setAndSave} />
 
-      <div className="fd-row">
-        <span className="fd-label">보관방법</span>
+      <div className="foodDetailrow">
+        <span className="foodDetaillabel">보관방법</span>
         <StorageSelect
           value={formData.storageType ?? DEFAULT_STORAGE}
           onChange={(value) => setAndSave("storageType" as keyof Food, value)}
         />
       </div>
 
-      <DateSection 
-        formData={formData} 
-        setAndSave={setAndSave} 
+      <DateSection
+        food={food}
+        formData={formData}
+        setAndSave={setAndSave}
         apiData={barcodeData as any}
       />
 
-      <div className="fd-row">
-        <span className="fd-label">현재 수량 / 남은 수량 (단위)</span>    
+      <div className="foodDetailrow">
+        <span className="foodDetaillabel">현재 수량 / 남은 수량 (단위)</span>
         <QuantitySection formData={formData} setAndSave={setAndSave} />
       </div>
     </div>

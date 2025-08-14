@@ -1,4 +1,4 @@
-
+/* src/pages/NotificationsPage/NotificationsPage.css */
 .notifications-page {
   width: 100%;
   max-width: 1024px;
@@ -70,7 +70,7 @@
   gap: 10px;
 }
 
-.item-qty {
+.item-quantity {
   display: flex;
   align-items: center;
   gap: 8px;

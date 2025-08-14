@@ -1,7 +1,7 @@
 // src/components/FoodDetail/components/Input.tsx
 
 import { useState, useEffect } from "react";
-import "./Input.css";
+import "../css/Input.css";
 import edit from "../../../assets/edit.png";
 
 interface InputProps {
@@ -43,7 +43,7 @@ export default function Input({
     return (
       <div className="input-container">
         <input
-          className={`fd-input ${className}`}
+          className={`foodDetailinput ${className}`}
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           onBlur={handleSave}
@@ -57,7 +57,7 @@ export default function Input({
     <div className="input-container">
       {showEditIcon ? (
         <>
-          <span className={`fd-text ${className}`}>{stringValue}</span>
+          <span className={`foodDetailtext ${className}`}>{stringValue}</span>
           <button
             className="edit-btn"
             onClick={handleEdit}
@@ -69,7 +69,7 @@ export default function Input({
       ) : (
         <input
           type={type}
-          className={`fd-input ${className}`}
+          className={`foodDetailinput ${className}`}
           value={stringValue}
           onChange={(e) => onSave(e.target.value)} 
         />
