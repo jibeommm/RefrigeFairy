@@ -25,7 +25,3 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Check GH_TOKEN value
-        run: printenv | grep GH_TOKEN
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
