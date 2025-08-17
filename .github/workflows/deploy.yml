@@ -1,6 +1,5 @@
 name: Deploy to GitHub Pages
 
-# 이 워크플로우는 main 브랜치 푸시 시 자동 배포를 수행합니다
 on:
   push:
     branches:
@@ -10,16 +9,15 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3 
+      - uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' 
+          node-version: '20'
 
       - name: Create .env file
         run: echo "VITE_FOOD_API_KEY=${{ secrets.VITE_FOOD_API_KEY }}" >> .env
-
 
       - name: Install dependencies
         run: npm install
@@ -29,5 +27,5 @@ jobs:
 
       - name: Deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run deploy
