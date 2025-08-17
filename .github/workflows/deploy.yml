@@ -8,18 +8,18 @@ on:
 
 jobs:
   build-and-deploy:
-    # 실행 환경 설정
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3  # 코드 체크아웃
+      - uses: actions/checkout@v3 
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Node.js 버전 설정
+          node-version: '20' 
 
       - name: Create .env file
         run: echo "VITE_FOOD_API_KEY=${{ secrets.VITE_FOOD_API_KEY }}" >> .env
+
 
       - name: Install dependencies
         run: npm install
